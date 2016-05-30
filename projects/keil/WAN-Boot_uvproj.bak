@@ -361,7 +361,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\src\include\arch_stm32;..\..\src\include\kernel;..\..\src\include\lib</IncludePath>
+              <IncludePath>..\..\src\include\arch_stm32;..\..\src\include\wan_boot;..\..\src\include\lib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -432,42 +432,42 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>kernel</GroupName>
+          <GroupName>wan_boot</GroupName>
           <Files>
             <File>
               <FileName>checksum.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\src\kernel\checksum.c</FilePath>
+              <FilePath>..\..\src\wan_boot\checksum.c</FilePath>
             </File>
             <File>
               <FileName>cmd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\src\kernel\cmd.c</FilePath>
+              <FilePath>..\..\src\wan_boot\cmd.c</FilePath>
             </File>
             <File>
               <FileName>crc32.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\src\kernel\crc32.c</FilePath>
+              <FilePath>..\..\src\wan_boot\crc32.c</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\src\kernel\main.c</FilePath>
+              <FilePath>..\..\src\wan_boot\main.c</FilePath>
             </File>
             <File>
               <FileName>sched.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\src\kernel\sched.c</FilePath>
+              <FilePath>..\..\src\wan_boot\sched.c</FilePath>
             </File>
             <File>
               <FileName>time.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\src\kernel\time.c</FilePath>
+              <FilePath>..\..\src\wan_boot\time.c</FilePath>
             </File>
             <File>
               <FileName>wanp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\src\kernel\wanp.c</FilePath>
+              <FilePath>..\..\src\wan_boot\wanp.c</FilePath>
             </File>
           </Files>
         </Group>

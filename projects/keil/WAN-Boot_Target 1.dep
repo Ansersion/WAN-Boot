@@ -72,6 +72,12 @@ I (..\..\src\include\lib\misc.h)(0x5747AFF6)
 I (..\..\src\include\wan_boot\wanp.h)(0x5747AFF6)
 F (..\..\src\arch\os_cpu_a.asm)(0x5747AFF6)(--cpu Cortex-M3 -g --apcs=interwork -I D:\Installed\MDK5\ARM\RV31\INC-I D:\Installed\MDK5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I D:\Installed\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.4\Device\Include--list .\os_cpu_a.lst --xref -o .\os_cpu_a.o --depend .\os_cpu_a.d)
 F (..\..\src\arch\startup_stm32f10x_hd.s)(0x5747AFF6)(--cpu Cortex-M3 -g --apcs=interwork -I D:\Installed\MDK5\ARM\RV31\INC-I D:\Installed\MDK5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I D:\Installed\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.4\Device\Include--list .\startup_stm32f10x_hd.lst --xref -o .\startup_stm32f10x_hd.o --depend .\startup_stm32f10x_hd.d)
+F (..\..\src\arch\flash_read.c)(0x574BDA35)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\..\src\include\arch_stm32 -I..\..\src\include\wan_boot -I..\..\src\include\lib --C99-I D:\Installed\MDK5\ARM\RV31\INC-I D:\Installed\MDK5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I D:\Installed\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.4\Device\Include-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o .\flash_read.o --omf_browse .\flash_read.crf --depend .\flash_read.d)
+I (..\..\src\include\arch_stm32\flash_read.h)(0x574BD46B)
+I (..\..\src\include\wan_boot\include.h)(0x5747AFF6)
+I (D:\Installed\MDK5\ARM\ARMCC\include\stdlib.h)(0x52FDD27E)
+I (D:\Installed\MDK5\ARM\ARMCC\include\stdio.h)(0x52FDD27E)
+I (D:\Installed\MDK5\ARM\ARMCC\include\string.h)(0x52FDD27E)
 F (..\..\src\wan_boot\checksum.c)(0x5747AFF6)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\..\src\include\arch_stm32 -I..\..\src\include\wan_boot -I..\..\src\include\lib --C99-I D:\Installed\MDK5\ARM\RV31\INC-I D:\Installed\MDK5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I D:\Installed\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.4\Device\Include-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o .\checksum.o --omf_browse .\checksum.crf --depend .\checksum.d)
 I (..\..\src\include\wan_boot\include.h)(0x5747AFF6)
 I (D:\Installed\MDK5\ARM\ARMCC\include\stdlib.h)(0x52FDD27E)
@@ -79,7 +85,7 @@ I (D:\Installed\MDK5\ARM\ARMCC\include\stdio.h)(0x52FDD27E)
 I (D:\Installed\MDK5\ARM\ARMCC\include\string.h)(0x52FDD27E)
 I (..\..\src\include\wan_boot\wanp.h)(0x5747AFF6)
 I (..\..\src\include\wan_boot\checksum.h)(0x5747AFF6)
-F (..\..\src\wan_boot\cmd.c)(0x5747AFF6)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\..\src\include\arch_stm32 -I..\..\src\include\wan_boot -I..\..\src\include\lib --C99-I D:\Installed\MDK5\ARM\RV31\INC-I D:\Installed\MDK5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I D:\Installed\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.4\Device\Include-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o .\cmd.o --omf_browse .\cmd.crf --depend .\cmd.d)
+F (..\..\src\wan_boot\cmd.c)(0x574BADFC)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\..\src\include\arch_stm32 -I..\..\src\include\wan_boot -I..\..\src\include\lib --C99-I D:\Installed\MDK5\ARM\RV31\INC-I D:\Installed\MDK5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I D:\Installed\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.4\Device\Include-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o .\cmd.o --omf_browse .\cmd.crf --depend .\cmd.d)
 I (..\..\src\include\wan_boot\cmd.h)(0x5747AFF6)
 I (..\..\src\include\wan_boot\wanp.h)(0x5747AFF6)
 I (..\..\src\include\wan_boot\include.h)(0x5747AFF6)
@@ -93,7 +99,7 @@ I (..\..\src\include\wan_boot\include.h)(0x5747AFF6)
 I (D:\Installed\MDK5\ARM\ARMCC\include\stdlib.h)(0x52FDD27E)
 I (D:\Installed\MDK5\ARM\ARMCC\include\stdio.h)(0x52FDD27E)
 I (D:\Installed\MDK5\ARM\ARMCC\include\string.h)(0x52FDD27E)
-F (..\..\src\wan_boot\main.c)(0x5747AFF6)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\..\src\include\arch_stm32 -I..\..\src\include\wan_boot -I..\..\src\include\lib --C99-I D:\Installed\MDK5\ARM\RV31\INC-I D:\Installed\MDK5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I D:\Installed\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.4\Device\Include-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o .\main.o --omf_browse .\main.crf --depend .\main.d)
+F (..\..\src\wan_boot\main.c)(0x574BDA2D)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\..\src\include\arch_stm32 -I..\..\src\include\wan_boot -I..\..\src\include\lib --C99-I D:\Installed\MDK5\ARM\RV31\INC-I D:\Installed\MDK5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I D:\Installed\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.4\Device\Include-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o .\main.o --omf_browse .\main.crf --depend .\main.d)
 I (..\..\src\include\wan_boot\include.h)(0x5747AFF6)
 I (D:\Installed\MDK5\ARM\ARMCC\include\stdlib.h)(0x52FDD27E)
 I (D:\Installed\MDK5\ARM\ARMCC\include\stdio.h)(0x52FDD27E)
@@ -123,6 +129,7 @@ I (..\..\src\include\wan_boot\wanp.h)(0x5747AFF6)
 I (..\..\src\include\wan_boot\checksum.h)(0x5747AFF6)
 I (..\..\src\include\wan_boot\cmd.h)(0x5747AFF6)
 I (..\..\src\include\wan_boot\crc32.h)(0x5747AFF6)
+I (..\..\src\include\arch_stm32\flash_read.h)(0x574BD46B)
 F (..\..\src\wan_boot\sched.c)(0x5747AFF6)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\..\src\include\arch_stm32 -I..\..\src\include\wan_boot -I..\..\src\include\lib --C99-I D:\Installed\MDK5\ARM\RV31\INC-I D:\Installed\MDK5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I D:\Installed\MDK5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.4\Device\Include-DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o .\sched.o --omf_browse .\sched.crf --depend .\sched.d)
 I (..\..\src\include\wan_boot\sched.h)(0x5747AFF6)
 I (..\..\src\include\wan_boot\include.h)(0x5747AFF6)

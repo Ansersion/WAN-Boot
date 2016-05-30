@@ -361,7 +361,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\src\include\arch_stm32;..\..\src\include\kernel;..\..\src\include\lib</IncludePath>
+              <IncludePath>..\..\src\include\arch_stm32;..\..\src\include\wan_boot;..\..\src\include\lib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -428,6 +428,11 @@
               <FileName>startup_stm32f10x_hd.s</FileName>
               <FileType>2</FileType>
               <FilePath>..\..\src\arch\startup_stm32f10x_hd.s</FilePath>
+            </File>
+            <File>
+              <FileName>flash_read.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\arch\flash_read.c</FilePath>
             </File>
           </Files>
         </Group>

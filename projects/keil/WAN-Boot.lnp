@@ -4,6 +4,7 @@
 ".\irq.o"
 ".\os_cpu_a.o"
 ".\startup_stm32f10x_hd.o"
+".\flash_read.o"
 ".\checksum.o"
 ".\cmd.o"
 ".\crc32.o"

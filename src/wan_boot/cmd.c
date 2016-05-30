@@ -170,7 +170,9 @@ int DoBurn(uint8_t * msg, uint8_t * kernel_name, uint8_t * addr, uint8_t * kerne
 				return -1;
 			}
 			strcpy((char *)kernel_size, ptr);
-		} else if(strcmp(ptr, "-f") == 0) {
+		} else if(strcmp(ptr, "-h") == 0) {
+			return HELP_BURN;
+		}else if(strcmp(ptr, "-f") == 0) {
 			ptr = strtok_r(NULL, " \r", &save_ptr); // '\r' is the used for WAN message
 			if(NULL == ptr) {
 				return -1;
