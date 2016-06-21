@@ -8,6 +8,7 @@
 #include "hardware.h"
 
 void OSInit(void); 	// (OS Initialization)
-void OSStart(void);
+// void OSStart(void);
+void BootStart(void);
 
 #endif

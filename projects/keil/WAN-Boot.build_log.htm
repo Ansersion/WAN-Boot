@@ -4,11 +4,19 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 D:\WAN-Boot\projects\keil\WAN-Boot.uvproj
-Project File Date:  06/17/2016
+Project File Date:  06/20/2016
 
 <h2>Output:</h2>
 Build target 'Target 1'
+assembling boot_cpu_a.asm...
+..\..\src\arch\boot_cpu_a.asm(139): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
 linking...
-Program Size: Code=11696 RO-data=820 RW-data=1104 ZI-data=48048  
+Program Size: Code=11640 RO-data=820 RW-data=1084 ZI-data=48068  
 FromELF: creating hex file...
-".\WAN-Boot.axf" - 0 Error(s), 0 Warning(s).
+".\WAN-Boot.axf" - 0 Error(s), 1 Warning(s).
+</pre>
+</body>
+</html>
+68  
+FromELF: creating hex file...
+".\WAN-Boot.axf" - 0 Error(s), 2 Warning(s).

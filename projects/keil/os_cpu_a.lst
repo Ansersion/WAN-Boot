@@ -9,7 +9,7 @@ ARM Macro Assembler    Page 1
     3 00000000         
     4 00000000                 EXPORT           OS_ENTER_CRITICAL
     5 00000000                 EXPORT           OS_EXIT_CRITICAL
-    6 00000000                 EXPORT           OSStart
+    6 00000000                 EXPORT           BootStart
     7 00000000                 EXPORT           PendSV_Handler
     8 00000000                 EXPORT           OSCtxSw
     9 00000000         
@@ -50,8 +50,8 @@ ARM Macro Assembler    Page 1
                                                             ions
    28 00000006 4770            BX               LR          ; Return
    29 00000008         
-   30 00000008         ;/******************OSStart************/
-   31 00000008         OSStart
+   30 00000008         ;/******************BootStart************/
+   31 00000008         BootStart
    32 00000008         ; disable interruptions
    33 00000008 B672            CPSID            I           ; OS_ENTER_CRITICAL
                                                             ();
@@ -87,8 +87,8 @@ ARM Macro Assembler    Page 2
    52 00000024         
    53 00000024         ; should never get here
    54 00000024         ; a endless loop
-   55 00000024         OSStartHang
-   56 00000024 E7FE            B                OSStartHang
+   55 00000024         BootStartHang
+   56 00000024 E7FE            B                BootStartHang
    57 00000026         
    58 00000026         ;/******************PendSV_Handler************/
    59 00000026         PendSV_Handler
@@ -180,6 +180,22 @@ Symbol: .text
    Uses
       None
 Comment: .text unused
+BootStart 00000008
+
+Symbol: BootStart
+   Definitions
+      At line 31 in file ..\..\src\arch\os_cpu_a.asm
+   Uses
+      At line 6 in file ..\..\src\arch\os_cpu_a.asm
+Comment: BootStart used once
+BootStartHang 00000024
+
+Symbol: BootStartHang
+   Definitions
+      At line 55 in file ..\..\src\arch\os_cpu_a.asm
+   Uses
+      At line 56 in file ..\..\src\arch\os_cpu_a.asm
+Comment: BootStartHang used once
 OSCtxSw 00000056
 
 Symbol: OSCtxSw
@@ -188,22 +204,6 @@ Symbol: OSCtxSw
    Uses
       At line 8 in file ..\..\src\arch\os_cpu_a.asm
 Comment: OSCtxSw used once
-OSStart 00000008
-
-Symbol: OSStart
-   Definitions
-      At line 31 in file ..\..\src\arch\os_cpu_a.asm
-   Uses
-      At line 6 in file ..\..\src\arch\os_cpu_a.asm
-Comment: OSStart used once
-OSStartHang 00000024
-
-Symbol: OSStartHang
-   Definitions
-      At line 55 in file ..\..\src\arch\os_cpu_a.asm
-   Uses
-      At line 56 in file ..\..\src\arch\os_cpu_a.asm
-Comment: OSStartHang used once
 OS_ENTER_CRITICAL 00000000
 
 Symbol: OS_ENTER_CRITICAL

@@ -10,9 +10,9 @@ INT32U TaskTimeSlice = TASK_TIME_SLICE;
 // uint32_t Index;
 // uint32_t MsgSize;
 extern u8 SRAM_Kernel_Buffer[MAX_KERNEL_SIZE];
-extern bool_t StartOSFlag;
+// extern bool_t StartOSFlag;
 extern bool_t EndBurningFlag;
-extern uint32_t * kernel_start_address;
+// extern uint32_t * kernel_start_address;
 
 /* Buffers for USART1 */
 unsigned char RecvBuffer[BUFSIZ];
@@ -24,7 +24,7 @@ unsigned char SendBuffer[BUFSIZ];
 // bool_t ChecksumGotten;
 bool_t MsgGotten;
 
-// 
+/*
 __asm void ModifyPC(void) {
 	IMPORT SRAM_Kernel_Buffer
 	MRS R0, PSP
@@ -33,6 +33,7 @@ __asm void ModifyPC(void) {
 	BX LR
 	align 4
 }
+*/
 
 void IRQInit(void)
 {
@@ -48,7 +49,7 @@ void IRQInit(void)
 volatile void IRQ_SysTick(void)
 {
 	 OS_ENTER_CRITICAL();
-	 if(StartOSFlag) ModifyPC();
+	 // if(StartOSFlag) ModifyPC();
 	 if((--TaskTimeSlice) == 0){
 		TaskTimeSlice = TASK_TIME_SLICE;
 		OSTaskSchedule();

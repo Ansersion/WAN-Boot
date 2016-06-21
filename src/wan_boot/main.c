@@ -37,18 +37,26 @@ extern const Cmd Startos;
 
 char tmp_buf[BUFSIZ];
 
+typedef struct KernelPmt {
+	uint32_t MoveKernelTo; // also the kernel running start address
+	uint32_t MoveKernelFrom;
+	uint32_t KernelSize;
+} KernelPmt;
+
+extern void MoveAndStartKernel_Asm(KernelPmt * KP); // asm function in boot_cpu_a.asm
+
+/*
 uint8_t kernel_name[64];
 uint8_t addr[32];
 uint8_t kernel_size[32];
 uint8_t crc[32];
-uint32_t u_kernel_size;
-uint32_t u_addr;
-uint32_t u_crc;
-u8 * kernel_start_address;
+*/
 
-// uint32_t u_kernel_size_test;
-// uint32_t u_addr_test;
-// int i_test;
+//uint32_t u_kernel_size;
+//uint32_t u_addr;
+// uint32_t u_crc;
+// u8 * kernel_start_address;
+
 
 // Task stack creating
 OS_STK TaskLedStk[TASK_STACK_SIZE];
@@ -58,9 +66,9 @@ OS_STK TaskBHStk[TASK_STACK_SIZE];
 void TaskLed(void *p_arg);
 void TaskBH(void *p_arg);
 
-unsigned long Addr = 0;
+// unsigned long Addr = 0;
 bool_t ReadDMAFlag = 0;
-bool_t StartOSFlag = 0;
+// bool_t StartOSFlag = 0;
 
 uint8_t WaitBurning(uint32_t addr, uint32_t size, uint32_t crc);
 bool_t EndBurningFlag;
@@ -115,7 +123,7 @@ uint8_t WaitBurning(uint32_t addr, uint32_t size, uint32_t crc)
 		FLASH_ProgramWord(OS_INFO_ADDRESS + 4, size);
 		FLASH_Lock();
 		OS_EXIT_CRITICAL();
-		kernel_start_address = (u8 *)addr;	
+//		kernel_start_address = (u8 *)addr;	
 		LEN_RED_TURN();
 		return 0;
 }
@@ -123,11 +131,11 @@ uint8_t WaitBurning(uint32_t addr, uint32_t size, uint32_t crc)
 int main(void)
 {
 	OSInit();
-
+	
 	OSTaskCreate(TaskLed, (void*)0, (OS_STK*)&TaskLedStk[TASK_STACK_SIZE-1]);
 	OSTaskCreate(TaskBH, (void*)0, (OS_STK*)&TaskBHStk[TASK_STACK_SIZE-1]);
 	
-	OSStart();
+	BootStart();
 }
 
 
@@ -141,12 +149,25 @@ void TaskLed(void *p_arg)
 
 void TaskBH(void *p_arg)
 {
+	uint8_t kernel_name[64];
+	uint8_t addr[32];
+	uint8_t kernel_size[32];
+	uint8_t crc[32];
+	
+	uint32_t u_crc;
+	
 	char * endptr;
 	char * tmp_buf_pointer;
+
+
 	// uint8_t k;
 	int ret;
-	int i;
+//	int i;
 	uint16_t msg_size;
+	
+	KernelPmt KP;
+	
+	KP.MoveKernelTo = 0x20000000;
 	
 	#ifdef WANP
 
@@ -185,22 +206,22 @@ void TaskBH(void *p_arg)
 						ret = DoBurn(RecvBuffer, kernel_name, addr, kernel_size, crc);
 						if(ret == 0) {
 							if('0' == addr[0] && ('x' == addr[1] || 'X' == addr[1])) {
-								u_addr = strtol((const char *)addr, &endptr, 16);
-							} else {
-								u_addr = atoi((const char *)addr);
+								KP.MoveKernelFrom = strtol((const char *)addr, &endptr, 16);
+							} else {			
+								KP.MoveKernelFrom = atoi((const char *)addr);
 							}
 							if('0' == kernel_size[0] && ('x' == kernel_size[1] || 'X' == kernel_size[1])) {
-								u_kernel_size = strtol((const char *)kernel_size, &endptr, 16);
+								KP.KernelSize = strtol((const char *)kernel_size, &endptr, 16);
 							} else {
-								u_kernel_size = atoi((const char *)kernel_size);
+								KP.KernelSize = atoi((const char *)kernel_size);
 							}
 							if('0' == crc[0] && ('x' == crc[1] || 'X' == crc[1])) {
 								u_crc = strtol((const char *)crc, &endptr, 16);
 							} else {
 								u_crc = atoi((const char *)crc);
 							}
-							WaitBurning(u_addr, u_kernel_size, u_crc);
-							printf("u_addr:u_kernel_size:u_crc=%08x:%08x:%08x\r\n", u_addr, u_kernel_size, u_crc);
+							WaitBurning(KP.MoveKernelFrom, KP.KernelSize, u_crc);
+							printf("Addr:KernelSize:Crc=%08x:%08x:%08x\r\n", KP.MoveKernelFrom, KP.KernelSize, u_crc);
 							RespOK(SendBuffer, cmd_buf, NULL);
 						} else if(HELP_BURN == ret) {
 							tmp_buf_pointer = tmp_buf;
@@ -218,17 +239,24 @@ void TaskBH(void *p_arg)
 						ret = DoStartos(RecvBuffer);
 						if(0 == ret) {
 							// OS Info
-							u_addr = 0;
+							/*
 							flash_read_l(OS_INFO_ADDRESS, &u_addr);
-							flash_read_l(OS_INFO_ADDRESS + 4, &u_kernel_size);					
-							printf("u_addr:u_kernel_size=%x:%d\r\n", u_addr, u_kernel_size);
-							for(i = 0; i < u_kernel_size; i++) {
-								*(SRAM_Kernel_Buffer+i) = *((uint8_t *)(u_addr + i));
-							}
-							OS_ENTER_CRITICAL();
-							StartOSFlag = TRUE;
-							OS_EXIT_CRITICAL();
+							flash_read_l(OS_INFO_ADDRESS + 4, &u_kernel_size);
+							KP.MoveKernelFrom = u_addr;
+							KP.KernelSize = u_kernel_size;
+							KP.MoveKernelTo = 0x20000000;
+							*/
+							flash_read_l(OS_INFO_ADDRESS, &(KP.MoveKernelFrom));
+							flash_read_l(OS_INFO_ADDRESS + 4, &(KP.KernelSize));
+							printf("Addr:KernelSize:RunAddr=%x:%d:%x\r\n", KP.MoveKernelFrom, KP.KernelSize, KP.MoveKernelTo);
 							RespOK(SendBuffer, cmd_buf, NULL);
+							
+							// void StartKernel_2(uint32_t addr);
+							OS_ENTER_CRITICAL();
+							MoveAndStartKernel_Asm(&KP);
+							// StartKernel_2(0x20008000);
+							OS_EXIT_CRITICAL();
+
 						} else if(HELP_STARTOS == ret) {
 							tmp_buf_pointer = tmp_buf;
 							tmp_buf_pointer += sprintf(tmp_buf_pointer, "startos: \r\n");

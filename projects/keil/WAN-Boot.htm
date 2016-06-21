@@ -3,21 +3,22 @@
 <title>Static Call Graph - [.\WAN-Boot.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\WAN-Boot.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5040049: Last Updated: Mon Jun 20 10:47:14 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5040049: Last Updated: Tue Jun 21 09:00:42 2016
 <BR><P>
-<H3>Maximum Stack Usage =        200 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        376 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 TaskBH &rArr; WaitBurning &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 <P>
 <H3>
 Functions with no stack information
 </H3><UL>
+ <LI><a href="#[e1]">__user_initial_stackheap</a>
  <LI><a href="#[77]">OS_ENTER_CRITICAL</a>
  <LI><a href="#[79]">OS_EXIT_CRITICAL</a>
- <LI><a href="#[b2]">OSStart</a>
+ <LI><a href="#[b2]">BootStart</a>
  <LI><a href="#[b]">PendSV_Handler</a>
  <LI><a href="#[b7]">OSCtxSw</a>
- <LI><a href="#[e1]">__user_initial_stackheap</a>
+ <LI><a href="#[ae]">MoveAndStartKernel_Asm</a>
 </UL>
 </UL>
 <P>
@@ -71,7 +72,7 @@ Function Pointers
  <LI><a href="#[4]">NMI_Handler</a> from startup_stm32f10x_hd.o(.text) referenced from startup_stm32f10x_hd.o(RESET)
  <LI><a href="#[b4]">OS_TaskIdle</a> from sched.o(.text) referenced from sched.o(.text)
  <LI><a href="#[e]">PVD_IRQHandler</a> from startup_stm32f10x_hd.o(.text) referenced from startup_stm32f10x_hd.o(RESET)
- <LI><a href="#[b]">PendSV_Handler</a> from os_cpu_a.o(.text) referenced from startup_stm32f10x_hd.o(RESET)
+ <LI><a href="#[b]">PendSV_Handler</a> from boot_cpu_a.o(.text) referenced from startup_stm32f10x_hd.o(RESET)
  <LI><a href="#[12]">RCC_IRQHandler</a> from startup_stm32f10x_hd.o(.text) referenced from startup_stm32f10x_hd.o(RESET)
  <LI><a href="#[36]">RTCAlarm_IRQHandler</a> from startup_stm32f10x_hd.o(.text) referenced from startup_stm32f10x_hd.o(RESET)
  <LI><a href="#[10]">RTC_IRQHandler</a> from startup_stm32f10x_hd.o(.text) referenced from startup_stm32f10x_hd.o(RESET)
@@ -97,7 +98,7 @@ Function Pointers
  <LI><a href="#[3b]">TIM8_CC_IRQHandler</a> from startup_stm32f10x_hd.o(.text) referenced from startup_stm32f10x_hd.o(RESET)
  <LI><a href="#[3a]">TIM8_TRG_COM_IRQHandler</a> from startup_stm32f10x_hd.o(.text) referenced from startup_stm32f10x_hd.o(RESET)
  <LI><a href="#[39]">TIM8_UP_IRQHandler</a> from startup_stm32f10x_hd.o(.text) referenced from startup_stm32f10x_hd.o(RESET)
- <LI><a href="#[a9]">TaskBH</a> from main.o(.text) referenced from main.o(.text)
+ <LI><a href="#[a8]">TaskBH</a> from main.o(.text) referenced from main.o(.text)
  <LI><a href="#[af]">TaskLed</a> from main.o(.text) referenced from main.o(.text)
  <LI><a href="#[41]">UART4_IRQHandler</a> from startup_stm32f10x_hd.o(.text) referenced from startup_stm32f10x_hd.o(RESET)
  <LI><a href="#[42]">UART5_IRQHandler</a> from startup_stm32f10x_hd.o(.text) referenced from startup_stm32f10x_hd.o(RESET)
@@ -284,10 +285,6 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sys_exit
 </UL>
 
-<P><STRONG><a name="[8e]"></a>ModifyPC</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, irq.o(.emb_text))
-<BR><BR>[Called By]<UL><LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
-</UL>
-
 <P><STRONG><a name="[66]"></a>InitBuffers</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, hardware.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = InitBuffers &rArr; __aeabi_memclr4
 </UL>
@@ -399,12 +396,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSInit
 </UL>
 
-<P><STRONG><a name="[c]"></a>SysTick_Handler</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, irq.o(.text))
+<P><STRONG><a name="[c]"></a>SysTick_Handler</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, irq.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16 + Unknown Stack Size
 <LI>Call Chain = SysTick_Handler &rArr; OSTaskSchedule
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskSchedule
-<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ModifyPC
+<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskSchedule
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_EXIT_CRITICAL
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_ENTER_CRITICAL
 </UL>
@@ -414,7 +410,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 24 + Unknown Stack Size
 <LI>Call Chain = USART1_IRQHandler &rArr; USART_GetITStatus
 </UL>
-<BR>[Calls]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetITStatus
+<BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetITStatus
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_EXIT_CRITICAL
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_ENTER_CRITICAL
 </UL>
@@ -427,47 +423,14 @@ Global Symbols
 <P><STRONG><a name="[1c]"></a>DMA1_Channel5_IRQHandler</STRONG> (Thumb, 72 bytes, Stack size 8 bytes, irq.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = DMA1_Channel5_IRQHandler &rArr; USART_ITConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_DMACmd
-<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_Cmd
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_ClearITPendingBit
+<BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_DMACmd
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_Cmd
+<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_ClearITPendingBit
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Cmd
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[77]"></a>OS_ENTER_CRITICAL</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, os_cpu_a.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSInitTaskIdle
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskCreate
-<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
-<LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
-<LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
-<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSInit
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTickInit
-</UL>
-
-<P><STRONG><a name="[79]"></a>OS_EXIT_CRITICAL</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, os_cpu_a.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSInitTaskIdle
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskCreate
-<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
-<LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
-<LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
-<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSInit
-<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTickInit
-</UL>
-
-<P><STRONG><a name="[b2]"></a>OSStart</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, os_cpu_a.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[b]"></a>PendSV_Handler</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, os_cpu_a.o(.text))
-<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
-</UL>
-<P><STRONG><a name="[b7]"></a>OSCtxSw</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, os_cpu_a.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskSchedule
-</UL>
-
 <P><STRONG><a name="[3]"></a>Reset_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, startup_stm32f10x_hd.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
@@ -702,116 +665,154 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[ae]"></a>flash_read_l</STRONG> (Thumb, 42 bytes, Stack size 12 bytes, flash_read.o(.text))
+<P><STRONG><a name="[ad]"></a>flash_read_l</STRONG> (Thumb, 42 bytes, Stack size 12 bytes, flash_read.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = flash_read_l
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
 </UL>
 
-<P><STRONG><a name="[aa]"></a>GetCmd</STRONG> (Thumb, 70 bytes, Stack size 0 bytes, cmd.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<P><STRONG><a name="[77]"></a>OS_ENTER_CRITICAL</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, boot_cpu_a.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSInitTaskIdle
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskCreate
+<LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
+<LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSInit
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTickInit
 </UL>
 
-<P><STRONG><a name="[94]"></a>RespOK</STRONG> (Thumb, 52 bytes, Stack size 24 bytes, cmd.o(.text))
+<P><STRONG><a name="[79]"></a>OS_EXIT_CRITICAL</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, boot_cpu_a.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSInitTaskIdle
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskCreate
+<LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
+<LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSInit
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTickInit
+</UL>
+
+<P><STRONG><a name="[b2]"></a>BootStart</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, boot_cpu_a.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[b]"></a>PendSV_Handler</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, boot_cpu_a.o(.text))
+<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
+</UL>
+<P><STRONG><a name="[b7]"></a>OSCtxSw</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, boot_cpu_a.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskSchedule
+</UL>
+
+<P><STRONG><a name="[ae]"></a>MoveAndStartKernel_Asm</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, boot_cpu_a.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+</UL>
+
+<P><STRONG><a name="[a9]"></a>GetCmd</STRONG> (Thumb, 70 bytes, Stack size 0 bytes, cmd.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+</UL>
+
+<P><STRONG><a name="[93]"></a>RespOK</STRONG> (Thumb, 52 bytes, Stack size 24 bytes, cmd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = RespOK &rArr; strcpy
 </UL>
-<BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
+<BR>[Calls]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
 </UL>
 
-<P><STRONG><a name="[97]"></a>RespErr</STRONG> (Thumb, 82 bytes, Stack size 24 bytes, cmd.o(.text))
+<P><STRONG><a name="[96]"></a>RespErr</STRONG> (Thumb, 82 bytes, Stack size 24 bytes, cmd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = RespErr &rArr; strncpy
 </UL>
-<BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncpy
-<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncpy
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
 </UL>
 
-<P><STRONG><a name="[99]"></a>DoHello</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, cmd.o(.text))
+<P><STRONG><a name="[98]"></a>DoHello</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, cmd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = DoHello &rArr; strstr
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
+<BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
 </UL>
 
-<P><STRONG><a name="[9b]"></a>DoBurn</STRONG> (Thumb, 274 bytes, Stack size 32 bytes, cmd.o(.text))
+<P><STRONG><a name="[9a]"></a>DoBurn</STRONG> (Thumb, 274 bytes, Stack size 32 bytes, cmd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = DoBurn &rArr; strcpy
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtok_r
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
+<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
+<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtok_r
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
 </UL>
 
-<P><STRONG><a name="[9e]"></a>DoStartos</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, cmd.o(.text))
+<P><STRONG><a name="[9d]"></a>DoStartos</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, cmd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = DoStartos &rArr; strstr
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
+<BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
 </UL>
 
-<P><STRONG><a name="[9f]"></a>SealPacket</STRONG> (Thumb, 16 bytes, Stack size 16 bytes, cmd.o(.text))
+<P><STRONG><a name="[9e]"></a>SealPacket</STRONG> (Thumb, 16 bytes, Stack size 16 bytes, cmd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = SealPacket &rArr; strlen
 </UL>
-<BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<BR>[Calls]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
 </UL>
 
-<P><STRONG><a name="[a2]"></a>crc32_byte</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, crc32.o(.text))
+<P><STRONG><a name="[a1]"></a>crc32_byte</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, crc32.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = crc32_byte
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
 </UL>
 
-<P><STRONG><a name="[a0]"></a>WaitBurning</STRONG> (Thumb, 282 bytes, Stack size 24 bytes, main.o(.text))
+<P><STRONG><a name="[9f]"></a>WaitBurning</STRONG> (Thumb, 278 bytes, Stack size 24 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
 <LI>Call Chain = WaitBurning &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
-<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_Unlock
-<LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ProgramWord
-<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ProgramHalfWord
-<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_Lock
-<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ErasePage
-<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ClearFlag
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc32_byte
-<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_DMACmd
-<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_Cmd
+<BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_Unlock
+<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ProgramWord
+<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ProgramHalfWord
+<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_Lock
+<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ErasePage
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ClearFlag
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc32_byte
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_DMACmd
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_Cmd
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Cmd
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_EXIT_CRITICAL
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_ENTER_CRITICAL
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
 </UL>
 
-<P><STRONG><a name="[a9]"></a>TaskBH</STRONG> (Thumb, 652 bytes, Stack size 32 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 200 + Unknown Stack Size
+<P><STRONG><a name="[a8]"></a>TaskBH</STRONG> (Thumb, 608 bytes, Stack size 208 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 376 + Unknown Stack Size
 <LI>Call Chain = TaskBH &rArr; WaitBurning &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
-<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
-<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SealPacket
-<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoStartos
-<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoBurn
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoHello
-<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RespErr
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RespOK
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCmd
-<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_read_l
+<BR>[Calls]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SealPacket
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoStartos
+<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoBurn
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoHello
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RespErr
+<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RespOK
+<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCmd
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MoveAndStartKernel_Asm
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_read_l
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_EXIT_CRITICAL
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OS_ENTER_CRITICAL
-<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;atoi
+<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;atoi
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text)
 </UL>
@@ -822,12 +823,12 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text)
 </UL>
-<P><STRONG><a name="[60]"></a>main</STRONG> (Thumb, 674 bytes, Stack size 8 bytes, main.o(.text))
+<P><STRONG><a name="[60]"></a>main</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 116 + Unknown Stack Size
 <LI>Call Chain = main &rArr; OSInit &rArr; USART1_Configuration &rArr; USART_Init &rArr; RCC_GetClocksFreq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSTaskCreate
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSStart
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BootStart
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSInit
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
@@ -883,7 +884,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSInit
 </UL>
 
-<P><STRONG><a name="[8f]"></a>OSTaskSchedule</STRONG> (Thumb, 78 bytes, Stack size 8 bytes, sched.o(.text))
+<P><STRONG><a name="[8e]"></a>OSTaskSchedule</STRONG> (Thumb, 78 bytes, Stack size 8 bytes, sched.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
 <LI>Call Chain = OSTaskSchedule
 </UL>
@@ -951,8 +952,8 @@ Global Symbols
 
 <P><STRONG><a name="[10d]"></a>DMA_StructInit</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f10x_dma.o(.text), UNUSED)
 
-<P><STRONG><a name="[92]"></a>DMA_Cmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f10x_dma.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<P><STRONG><a name="[91]"></a>DMA_Cmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f10x_dma.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
 <LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel5_IRQHandler
 </UL>
 
@@ -970,7 +971,7 @@ Global Symbols
 
 <P><STRONG><a name="[112]"></a>DMA_GetITStatus</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, stm32f10x_dma.o(.text), UNUSED)
 
-<P><STRONG><a name="[91]"></a>DMA_ClearITPendingBit</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f10x_dma.o(.text))
+<P><STRONG><a name="[90]"></a>DMA_ClearITPendingBit</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f10x_dma.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel5_IRQHandler
 </UL>
 
@@ -984,14 +985,14 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitClk
 </UL>
 
-<P><STRONG><a name="[a3]"></a>FLASH_Unlock</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f10x_flash.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<P><STRONG><a name="[a2]"></a>FLASH_Unlock</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f10x_flash.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
 </UL>
 
 <P><STRONG><a name="[114]"></a>FLASH_UnlockBank1</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f10x_flash.o(.text), UNUSED)
 
-<P><STRONG><a name="[a7]"></a>FLASH_Lock</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, stm32f10x_flash.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<P><STRONG><a name="[a6]"></a>FLASH_Lock</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, stm32f10x_flash.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
 </UL>
 
 <P><STRONG><a name="[115]"></a>FLASH_LockBank1</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, stm32f10x_flash.o(.text), UNUSED)
@@ -1012,17 +1013,17 @@ Global Symbols
 <LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ProgramOptionByteData
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_EraseOptionBytes
 <LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_EraseAllPages
-<LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ProgramWord
-<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ProgramHalfWord
-<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ErasePage
+<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ProgramWord
+<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ProgramHalfWord
+<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_ErasePage
 </UL>
 
-<P><STRONG><a name="[a5]"></a>FLASH_ErasePage</STRONG> (Thumb, 72 bytes, Stack size 12 bytes, stm32f10x_flash.o(.text))
+<P><STRONG><a name="[a4]"></a>FLASH_ErasePage</STRONG> (Thumb, 72 bytes, Stack size 12 bytes, stm32f10x_flash.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = FLASH_ErasePage &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WaitForLastOperation
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
 </UL>
 
 <P><STRONG><a name="[bc]"></a>FLASH_EraseAllPages</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, stm32f10x_flash.o(.text), UNUSED)
@@ -1048,20 +1049,20 @@ Global Symbols
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WaitForLastOperation
 </UL>
 
-<P><STRONG><a name="[a8]"></a>FLASH_ProgramWord</STRONG> (Thumb, 102 bytes, Stack size 20 bytes, stm32f10x_flash.o(.text))
+<P><STRONG><a name="[a7]"></a>FLASH_ProgramWord</STRONG> (Thumb, 102 bytes, Stack size 20 bytes, stm32f10x_flash.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = FLASH_ProgramWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WaitForLastOperation
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
 </UL>
 
-<P><STRONG><a name="[a6]"></a>FLASH_ProgramHalfWord</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, stm32f10x_flash.o(.text))
+<P><STRONG><a name="[a5]"></a>FLASH_ProgramHalfWord</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, stm32f10x_flash.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = FLASH_ProgramHalfWord &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_WaitForLastOperation
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
 </UL>
 
 <P><STRONG><a name="[c1]"></a>FLASH_ProgramOptionByteData</STRONG> (Thumb, 72 bytes, Stack size 16 bytes, stm32f10x_flash.o(.text), UNUSED)
@@ -1090,8 +1091,8 @@ Global Symbols
 
 <P><STRONG><a name="[11a]"></a>FLASH_GetFlagStatus</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, stm32f10x_flash.o(.text), UNUSED)
 
-<P><STRONG><a name="[a4]"></a>FLASH_ClearFlag</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f10x_flash.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<P><STRONG><a name="[a3]"></a>FLASH_ClearFlag</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f10x_flash.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
 </UL>
 
 <P><STRONG><a name="[11b]"></a>FLASH_GetStatus</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, stm32f10x_flash.o(.text), UNUSED)
@@ -1274,7 +1275,7 @@ Global Symbols
 <P><STRONG><a name="[13d]"></a>USART_ClockStructInit</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f10x_usart.o(.text), UNUSED)
 
 <P><STRONG><a name="[85]"></a>USART_Cmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f10x_usart.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<BR><BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
 <LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel5_IRQHandler
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_Configuration
 </UL>
@@ -1282,13 +1283,13 @@ Global Symbols
 <P><STRONG><a name="[84]"></a>USART_ITConfig</STRONG> (Thumb, 74 bytes, Stack size 20 bytes, stm32f10x_usart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = USART_ITConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
 <LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel5_IRQHandler
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_Configuration
 </UL>
 
-<P><STRONG><a name="[93]"></a>USART_DMACmd</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f10x_usart.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<P><STRONG><a name="[92]"></a>USART_DMACmd</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f10x_usart.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
 <LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Channel5_IRQHandler
 </UL>
 
@@ -1330,7 +1331,7 @@ Global Symbols
 
 <P><STRONG><a name="[150]"></a>USART_ClearFlag</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f10x_usart.o(.text), UNUSED)
 
-<P><STRONG><a name="[90]"></a>USART_GetITStatus</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, stm32f10x_usart.o(.text))
+<P><STRONG><a name="[8f]"></a>USART_GetITStatus</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, stm32f10x_usart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = USART_GetITStatus
 </UL>
 <BR>[Called By]<UL><LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
@@ -1340,24 +1341,24 @@ Global Symbols
 
 <P><STRONG><a name="[152]"></a>__use_no_semihosting</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, use_no_semi_2.o(.text), UNUSED)
 
-<P><STRONG><a name="[a1]"></a>__2printf</STRONG> (Thumb, 20 bytes, Stack size 24 bytes, __2printf.o(.text))
+<P><STRONG><a name="[a0]"></a>__2printf</STRONG> (Thumb, 20 bytes, Stack size 24 bytes, __2printf.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144 + Unknown Stack Size
 <LI>Call Chain = __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_file
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
 </UL>
 
-<P><STRONG><a name="[ab]"></a>__2sprintf</STRONG> (Thumb, 38 bytes, Stack size 32 bytes, __2sprintf.o(.text))
+<P><STRONG><a name="[aa]"></a>__2sprintf</STRONG> (Thumb, 38 bytes, Stack size 32 bytes, __2sprintf.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136 + Unknown Stack Size
 <LI>Call Chain = __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sputc
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_common
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
 </UL>
 
 <P><STRONG><a name="[cd]"></a>_printf_pre_padding</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, _printf_pad.o(.text))
@@ -1411,59 +1412,59 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_common
 </UL>
 
-<P><STRONG><a name="[ad]"></a>atoi</STRONG> (Thumb, 26 bytes, Stack size 16 bytes, atoi.o(.text))
+<P><STRONG><a name="[ac]"></a>atoi</STRONG> (Thumb, 26 bytes, Stack size 16 bytes, atoi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = atoi &rArr; strtol &rArr; _strtoul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_errno_addr
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
 </UL>
 
-<P><STRONG><a name="[ac]"></a>strtol</STRONG> (Thumb, 112 bytes, Stack size 32 bytes, strtol.o(.text))
+<P><STRONG><a name="[ab]"></a>strtol</STRONG> (Thumb, 112 bytes, Stack size 32 bytes, strtol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = strtol &rArr; _strtoul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_strtoul
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_errno_addr
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_ctype_table
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;atoi
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;atoi
 </UL>
 
 <P><STRONG><a name="[d6]"></a>_strtok_r</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, strtok_r.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__strtok_internal
 </UL>
 
-<P><STRONG><a name="[9c]"></a>strtok_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, strtok_r.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoBurn
+<P><STRONG><a name="[9b]"></a>strtok_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, strtok_r.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoBurn
 </UL>
 
-<P><STRONG><a name="[9a]"></a>strstr</STRONG> (Thumb, 36 bytes, Stack size 12 bytes, strstr.o(.text))
+<P><STRONG><a name="[99]"></a>strstr</STRONG> (Thumb, 36 bytes, Stack size 12 bytes, strstr.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = strstr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoStartos
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoHello
+<BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoStartos
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoHello
 </UL>
 
-<P><STRONG><a name="[95]"></a>strcpy</STRONG> (Thumb, 72 bytes, Stack size 12 bytes, strcpy.o(.text))
+<P><STRONG><a name="[94]"></a>strcpy</STRONG> (Thumb, 72 bytes, Stack size 12 bytes, strcpy.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = strcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoBurn
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RespOK
+<BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoBurn
+<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RespOK
 </UL>
 
-<P><STRONG><a name="[96]"></a>strlen</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, strlen.o(.text))
+<P><STRONG><a name="[95]"></a>strlen</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, strlen.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SealPacket
-<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RespErr
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RespOK
+<BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SealPacket
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RespErr
+<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RespOK
 </UL>
 
 <P><STRONG><a name="[8d]"></a>__aeabi_memclr</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memclr.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IRQInit
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncpy
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncpy
 </UL>
 
 <P><STRONG><a name="[d8]"></a>__rt_memclr</STRONG> (Thumb, 68 bytes, Stack size 0 bytes, rt_memclr.o(.text), UNUSED)
@@ -1486,17 +1487,17 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_memclr
 </UL>
 
-<P><STRONG><a name="[98]"></a>strncpy</STRONG> (Thumb, 86 bytes, Stack size 8 bytes, strncpy.o(.text))
+<P><STRONG><a name="[97]"></a>strncpy</STRONG> (Thumb, 86 bytes, Stack size 8 bytes, strncpy.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = strncpy
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RespErr
+<BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RespErr
 </UL>
 
-<P><STRONG><a name="[9d]"></a>strcmp</STRONG> (Thumb, 128 bytes, Stack size 0 bytes, strcmpv7m.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
-<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoBurn
+<P><STRONG><a name="[9c]"></a>strcmp</STRONG> (Thumb, 128 bytes, Stack size 0 bytes, strcmpv7m.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskBH
+<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DoBurn
 <LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_get_lc_ctype
 </UL>
 
@@ -1515,13 +1516,13 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_locale
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
+<BR>[Called By]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
 </UL>
 
 <P><STRONG><a name="[d3]"></a>__aeabi_errno_addr</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, rt_errno_addr_intlibspace.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_strtoul
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;atoi
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;atoi
 </UL>
 
 <P><STRONG><a name="[15c]"></a>__errno$intlibspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_errno_addr_intlibspace.o(.text), UNUSED)
@@ -1534,8 +1535,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_post_padding
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_pre_padding
 </UL>
-<BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_int_hex
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_int_dec
+<BR>[Called By]<UL><LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_int_dec
+<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_int_hex
 </UL>
 
 <P><STRONG><a name="[cb]"></a>_printf_char_common</STRONG> (Thumb, 32 bytes, Stack size 64 bytes, _printf_char_common.o(.text))
@@ -1544,12 +1545,12 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_file
 </UL>
 
 <P><STRONG><a name="[4a]"></a>_sputc</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, _sputc.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<BR><BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> __2sprintf.o(.text)
 </UL>
@@ -1581,7 +1582,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ferror
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_common
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 
 <P><STRONG><a name="[d5]"></a>_strtoul</STRONG> (Thumb, 158 bytes, Stack size 40 bytes, _strtoul.o(.text))
@@ -1590,7 +1591,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_chval
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_errno_addr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
+<BR>[Called By]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
 </UL>
 
 <P><STRONG><a name="[d7]"></a>__strtok_internal</STRONG> (Thumb, 64 bytes, Stack size 24 bytes, strtok_int.o(.text), UNUSED)
@@ -1652,7 +1653,7 @@ Global Symbols
 <P><STRONG><a name="[4b]"></a>_get_lc_ctype</STRONG> (Thumb, 44 bytes, Stack size 8 bytes, lc_ctype_c.o(locale$$code))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = _get_lc_ctype
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init_lc_ctype_2
 </UL>
