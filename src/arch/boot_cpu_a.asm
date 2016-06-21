@@ -135,7 +135,7 @@ MovingComplete
 
 StartKernel
 	MOV 	R0, R5
-	ADD 	R0, #1 ; To avoid UsageFault, LSB must be 1
+	ORR 	R0, R0, #0x1 ; To avoid UsageFault, LSB must be 1
 	MOV 	PC, R0
 ; Never come here
 DeadLoop
