@@ -13,14 +13,14 @@
 #define OS_STORED_ADDRESS 	0x08020000
 #define OS_INFO_ADDRESS 		0x08018000
 
-extern OS_TCB OSTCBTbl[OS_MAX_TASKS]; // (OS Task Control Block Table)
-extern OS_STK TASK_IDLE_STK[TASK_STACK_SIZE]; //("TaskIdle" Stack)
-extern OS_TCB *OSTCBCur; // Pointer to the current running task(OS Task Control Block Current)
-extern OS_TCB *OSTCBNext; // Pointer to the next running task(OS Task Control Block Next)
-extern INT8U OSTaskNext; // Index of the next task
-extern INT32U TaskTickLeft; // Refer to the time ticks left for the current task
-extern INT32U TimeMS;       // For system time record                             
-extern INT32U TaskTimeSlice; // For system time record
+// extern OS_TCB OSTCBTbl[OS_MAX_TASKS]; // (OS Task Control Block Table)
+// extern OS_STK TASK_IDLE_STK[TASK_STACK_SIZE]; //("TaskIdle" Stack)
+// extern OS_TCB *OSTCBCur; // Pointer to the current running task(OS Task Control Block Current)
+// extern OS_TCB *OSTCBNext; // Pointer to the next running task(OS Task Control Block Next)
+// extern INT8U OSTaskNext; // Index of the next task
+// extern INT32U TaskTickLeft; // Refer to the time ticks left for the current task
+// extern INT32U TimeMS;       // For system time record                             
+// extern INT32U TaskTimeSlice; // For system time record
 extern u8 SRAM_Kernel_Buffer[MAX_KERNEL_SIZE]; // For store the kernel
 
 // For usart1 receiving message
@@ -28,9 +28,8 @@ extern unsigned char RecvBuffer[BUFSIZ];
 extern unsigned char SendBuffer[BUFSIZ];
 extern bool_t MsgGotten;
 
-/* cmd.c */
-extern uint8_t cmd_buf[64];
-
+uint8_t cmd_buf[64];
+// cmd.c
 extern const Cmd Hello;
 extern const Cmd Burn;
 extern const Cmd Startos;
@@ -45,19 +44,6 @@ typedef struct KernelPmt {
 
 extern void MoveAndStartKernel_Asm(KernelPmt * KP); // asm function in boot_cpu_a.asm
 
-/*
-uint8_t kernel_name[64];
-uint8_t addr[32];
-uint8_t kernel_size[32];
-uint8_t crc[32];
-*/
-
-//uint32_t u_kernel_size;
-//uint32_t u_addr;
-// uint32_t u_crc;
-// u8 * kernel_start_address;
-
-
 // Task stack creating
 OS_STK TaskLedStk[TASK_STACK_SIZE];
 OS_STK TaskBHStk[TASK_STACK_SIZE];
@@ -67,7 +53,7 @@ void TaskLed(void *p_arg);
 void TaskBH(void *p_arg);
 
 // unsigned long Addr = 0;
-bool_t ReadDMAFlag = 0;
+// bool_t ReadDMAFlag = 0;
 // bool_t StartOSFlag = 0;
 
 uint8_t WaitBurning(uint32_t addr, uint32_t size, uint32_t crc);
@@ -239,22 +225,13 @@ void TaskBH(void *p_arg)
 						ret = DoStartos(RecvBuffer);
 						if(0 == ret) {
 							// OS Info
-							/*
-							flash_read_l(OS_INFO_ADDRESS, &u_addr);
-							flash_read_l(OS_INFO_ADDRESS + 4, &u_kernel_size);
-							KP.MoveKernelFrom = u_addr;
-							KP.KernelSize = u_kernel_size;
-							KP.MoveKernelTo = 0x20000000;
-							*/
 							flash_read_l(OS_INFO_ADDRESS, &(KP.MoveKernelFrom));
 							flash_read_l(OS_INFO_ADDRESS + 4, &(KP.KernelSize));
 							printf("Addr:KernelSize:RunAddr=%x:%d:%x\r\n", KP.MoveKernelFrom, KP.KernelSize, KP.MoveKernelTo);
 							RespOK(SendBuffer, cmd_buf, NULL);
 							
-							// void StartKernel_2(uint32_t addr);
 							OS_ENTER_CRITICAL();
 							MoveAndStartKernel_Asm(&KP);
-							// StartKernel_2(0x20008000);
 							OS_EXIT_CRITICAL();
 
 						} else if(HELP_STARTOS == ret) {

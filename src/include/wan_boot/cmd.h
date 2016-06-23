@@ -8,7 +8,7 @@
 #define HELP_BURN 		120
 #define HELP_STARTOS 	140
 
-int GetCmd(uint8_t * msg, uint8_t * cmd_buf);
+int GetCmd(uint8_t * msg, uint8_t * cmd);
 int RespOK(uint8_t * buf, uint8_t * cmd, uint8_t * append_msg);
 int RespErr(uint8_t * buf, uint8_t * cmd, uint8_t * reason);
 int DoHello(uint8_t * msg);

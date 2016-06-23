@@ -205,7 +205,7 @@
             <AdsLsun>1</AdsLsun>
             <AdsLven>1</AdsLven>
             <AdsLsxf>1</AdsLsxf>
-            <RvctClst>0</RvctClst>
+            <RvctClst>1</RvctClst>
             <GenPPlst>0</GenPPlst>
             <AdsCpuType>"Cortex-M3"</AdsCpuType>
             <RvctDeviceName></RvctDeviceName>
@@ -420,11 +420,6 @@
               <FilePath>..\..\src\arch\irq.c</FilePath>
             </File>
             <File>
-              <FileName>os_cpu_a.asm</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\src\arch\os_cpu_a.asm</FilePath>
-            </File>
-            <File>
               <FileName>startup_stm32f10x_hd.s</FileName>
               <FileType>2</FileType>
               <FilePath>..\..\src\arch\startup_stm32f10x_hd.s</FilePath>
@@ -433,6 +428,11 @@
               <FileName>flash_read.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\src\arch\flash_read.c</FilePath>
+            </File>
+            <File>
+              <FileName>boot_cpu_a.asm</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\src\arch\boot_cpu_a.asm</FilePath>
             </File>
           </Files>
         </Group>

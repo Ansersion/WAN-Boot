@@ -10,7 +10,7 @@ uint8_t TaskDaemonNext; // Index of the next daemon
 OS_TCB OSTCBTbl[OS_MAX_TASKS]; // (OS Task Control Block Table)
 OS_STK TASK_IDLE_STK[TASK_STACK_SIZE]; //("TaskIdle" Stack)
 
-INT32U TaskTickLeft; // Refer to the time ticks left for the current task
+// INT32U TaskTickLeft; // Refer to the time ticks left for the current task
 
 
 // Initialize the stack of a task, it is of much relationship with the specific CPU

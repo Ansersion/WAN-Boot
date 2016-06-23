@@ -1,9 +1,6 @@
 #include "cmd.h"
 #include "checksum.h"
 
-uint8_t dull_address;
-uint8_t cmd_buf[64];
-
 const Cmd Hello = {
 	.Name = "hello",
 	.Opts = {"-h", NULL, NULL, NULL, NULL, NULL, NULL, NULL}
@@ -19,19 +16,14 @@ const Cmd Startos = {
 	.Opts = {"-h", NULL, NULL, NULL, NULL, NULL, NULL, NULL}
 };
 
-// const Cmd * CmdSet[] = {&Hello, &Burn, NULL};
-// const int CmdNum = sizeof(CmdSet) / sizeof(Cmd *);
-// extern const Cmd Hello;
-// extern const Cmd Burn;
-
-int GetCmd(uint8_t * msg, uint8_t * cmd_buf)
+int GetCmd(uint8_t * msg, uint8_t * cmd)
 {
 	int k;
-	if(!msg || !cmd_buf) {
+	if(!msg || !cmd) {
 		return -1;
 	}
 #ifdef WANP
-	Wan_Get_ReqCmd(msg, cmd_buf);
+	Wan_Get_ReqCmd(msg, cmd);
 #else
 	for(k = 0; 1; k++) { // "-1": reserve 1 character for '\0'
 		switch(msg[k]) {
@@ -39,13 +31,13 @@ int GetCmd(uint8_t * msg, uint8_t * cmd_buf)
 			case '\0':
 			case '\r':
 			case '\n':
-				cmd_buf[k] = '\0';
+				cmd[k] = '\0';
 				break;
 			default:
-				cmd_buf[k] = msg[k];
+				cmd[k] = msg[k];
 				break;
 		}
-		if('\0' == cmd_buf[k]) break;
+		if('\0' == cmd[k]) break;
 	}
 #endif
 	return 0;
@@ -102,14 +94,6 @@ int DoHello(uint8_t * msg)
 {
 	if(!msg) return -1;
 	
-	// #ifdef WANP
-	// if(Wan_Get_ReqOpt(msg, Hello.Name, "-h", &dull_address) == 0) {
-	// 	printf("hello: \n");
-	// 	printf("	a test message to confirm connection.\n");
-	// 	return HELP_HELLO;
-	// }
-	// #else
-
 #ifdef WANP
 	msg += WAN_HEADER_SIZE;
 #endif
@@ -131,30 +115,6 @@ int DoBurn(uint8_t * msg, uint8_t * kernel_name, uint8_t * addr, uint8_t * kerne
 	if(!msg || !kernel_name || !addr || !kernel_size || !crc) 
 		return -1;
 
-	// #ifdef WANP
-	// if(Wan_Get_ReqOpt(msg, Burn.Name, "-h", &dull_address) == 0) {
-	// 	// printf("burn: \n");
-	// 	// printf("	burn kernel to specific address.\n");
-	// 	// printf("	-f\n");
-	// 	// printf("	-a\n");
-	// 	return HELP_BURN;
-	// }
-	// if(Wan_Get_ReqOpt(msg, Burn.Name, "-s", kernel_size) != 0) {
-	// 	printf("param err: -s\r\n");
-	// 	return -1;
-	// }
-	// if(Wan_Get_ReqOpt(msg, Burn.Name, "-f", kernel_name) != 0) {
-	// 	printf("param err: -f\r\n");
-	// 	return -1;
-	// }
-	// if(Wan_Get_ReqOpt(msg, Burn.Name, "-a", addr) != 0) {
-	// 	printf("param err: -a\r\n");
-	// 	return -1;
-	// }
-	// if(Wan_Get_ReqOpt(msg, Burn.Name, "-c", crc) != 0) {
-	// 	printf("Warning: No CRC\r\n");
-	// }
-	
 #ifdef WANP
 	msg += WAN_HEADER_SIZE;
 #endif
@@ -203,14 +163,7 @@ int DoBurn(uint8_t * msg, uint8_t * kernel_name, uint8_t * addr, uint8_t * kerne
 int DoStartos(uint8_t * msg)
 {
 	if(!msg) return -1;
-	
-	// #ifdef WANP
-	// if(Wan_Get_ReqOpt(msg, Startos.Name, "-h", &dull_address) == 0) {
-	// 	printf("startos: \n");
-	// 	printf("	Launch OS.\n");
-	// 	return HELP_STARTOS;
-	// }
-	
+
 #ifdef WANP
 	msg += WAN_HEADER_SIZE;
 #endif

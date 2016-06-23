@@ -34,6 +34,41 @@ __asm void ModifyPC(void) {
 	align 4
 }
 */
+#define HFSR 	((uint32_t *)0xE000ED2C)
+#define MFSR ((char *)0xE000ED28)
+#define BFSR ((char *)0xE000ED29)
+#define UFSR ((char *)0xE000ED2A)
+	
+volatile void IRQ_HardFault(void)
+{
+
+	printf("HardFault:%x\r\n", *HFSR);
+	printf("MemManage:%x\r\n", *MFSR);
+	printf("BusFault:%x\r\n", *BFSR);
+	printf("UsageFault:%x\r\n", *UFSR);
+	for(;;);
+}
+
+volatile void IRQ_MemManage(void)
+{
+
+	printf("MemManage:%x\r\n", *MFSR);
+	for(;;);
+}
+
+volatile void IRQ_BusFault(void)
+{
+
+	printf("BusFault:%x\r\n", *BFSR);
+	for(;;);
+}
+
+volatile void UsageFault_Handler(void)
+{
+
+	printf("UsageFault:%x\r\n", *UFSR);
+	for(;;);
+}
 
 void IRQInit(void)
 {

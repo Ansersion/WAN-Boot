@@ -8,66 +8,47 @@ Project File Date:  06/20/2016
 
 <h2>Output:</h2>
 Build target 'Target 1'
-linking...
-Program Size: Code=11640 RO-data=820 RW-data=1084 ZI-data=48068  
-FromELF: creating hex file...
-".\WAN-Boot.axf" - 0 Error(s), 0 Warning(s).
-ad.c(8): warning:  #68-D: integer conversion resulted in a change of sign
-                return -1;
-..\..\src\arch\flash_read.c: 1 warning, 0 errors
-assembling boot_cpu_a.asm...
-..\..\src\arch\boot_cpu_a.asm(139): warning: A1608W: MOV pc,<rn> instruction used, but BX <rn> is preferred
-compiling checksum.c...
-compiling cmd.c...
-..\..\src\wan_boot\cmd.c(69): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *restrict"
-        strcpy(buf, cmd);
-..\..\src\wan_boot\cmd.c(69): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *restrict"
-        strcpy(buf, cmd);
-..\..\src\wan_boot\cmd.c(71): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
-                strcpy(buf + strlen(cmd), append_msg);
-..\..\src\wan_boot\cmd.c(71): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *restrict"
-                strcpy(buf + strlen(cmd), append_msg);
-..\..\src\wan_boot\cmd.c(71): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *restrict"
-                strcpy(buf + strlen(cmd), append_msg);
-..\..\src\wan_boot\cmd.c(246): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
-        msg_size = strlen(msg);
-..\..\src\wan_boot\cmd.c: 6 warnings, 0 errors
-compiling crc32.c...
 compiling main.c...
-..\..\src\wan_boot\main.c(193): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+..\..\src\wan_boot\main.c(179): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
                                         if(strcmp(cmd_buf, Hello.Name) == 0) {
-..\..\src\wan_boot\main.c(201): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\src\wan_boot\main.c(187): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
                                                         RespOK(SendBuffer, cmd_buf, tmp_buf);
-..\..\src\wan_boot\main.c(205): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+..\..\src\wan_boot\main.c(191): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
                                         } else if(strcmp(cmd_buf, Burn.Name) == 0) {
-..\..\src\wan_boot\main.c(234): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\src\wan_boot\main.c(220): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
                                                         RespOK(SendBuffer, cmd_buf, tmp_buf);
-..\..\src\wan_boot\main.c(238): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+..\..\src\wan_boot\main.c(224): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
                                         } else if(strcmp(cmd_buf, Startos.Name) == 0) {
-..\..\src\wan_boot\main.c(264): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\src\wan_boot\main.c(241): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
                                                         RespOK(SendBuffer, cmd_buf, tmp_buf);
-..\..\src\wan_boot\main.c(271): warning:  #186-D: pointless comparison of unsigned integer with zero
+..\..\src\wan_boot\main.c(248): warning:  #186-D: pointless comparison of unsigned integer with zero
                                         if((msg_size = SealPacket(SendBuffer)) < 0) {
-..\..\src\wan_boot\main.c(166): warning:  #550-D: variable "msg_size" was set but never used
+..\..\src\wan_boot\main.c(152): warning:  #550-D: variable "msg_size" was set but never used
         uint16_t msg_size;
 ..\..\src\wan_boot\main.c: 8 warnings, 0 errors
-compiling sched.c...
-compiling time.c...
-compiling wanp.c...
-..\..\src\wan_boot\wanp.c(111): warning:  #1293-D: assignment in condition
-        while((*cmd = *req_msg)) {
-..\..\src\wan_boot\wanp.c: 1 warning, 0 errors
-compiling misc.c...
-compiling printf_to_serial.c...
-..\..\src\lib\printf_to_serial.c(20): warning:  #940-D: missing return statement at end of non-void function "_sys_exit"
-  } 
-..\..\src\lib\printf_to_serial.c: 1 warning, 0 errors
-compiling stm32f10x_dma.c...
-compiling stm32f10x_flash.c...
-compiling stm32f10x_gpio.c...
-compiling stm32f10x_rcc.c...
-compiling stm32f10x_usart.c...
 linking...
-Program Size: Code=11640 RO-data=820 RW-data=1084 ZI-data=48068  
+Program Size: Code=11804 RO-data=820 RW-data=1080 ZI-data=48072  
 FromELF: creating hex file...
-".\WAN-Boot.axf" - 0 Error(s), 18 Warning(s).
+".\WAN-Boot.axf" - 0 Error(s), 8 Warning(s).
+</pre>
+</body>
+</html>
+ is incompatible with parameter of type "uint8_t *"
+                                                        RespOK(SendBuffer, cmd_buf, tmp_buf);
+..\..\src\wan_boot\main.c(224): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
+                                        } else if(strcmp(cmd_buf, Startos.Name) == 0) {
+..\..\src\wan_boot\main.c(241): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+                                                        RespOK(SendBuffer, cmd_buf, tmp_buf);
+..\..\src\wan_boot\main.c(248): warning:  #186-D: pointless comparison of unsigned integer with zero
+                                        if((msg_size = SealPacket(SendBuffer)) < 0) {
+..\..\src\wan_boot\main.c(152): warning:  #550-D: variable "msg_size" was set but never used
+        uint16_t msg_size;
+..\..\src\wan_boot\main.c: 8 warnings, 0 errors
+linking...
+Program Size: Code=11804 RO-data=820 RW-data=1084 ZI-data=48068  
+FromELF: creating hex file...
+".\WAN-Boot.axf" - 0 Error(s), 14 Warning(s).
+information to list the image map.
+Finished: 2 information, 0 warning and 1 error messages.
+".\WAN-Boot.axf" - 1 Error(s), 14 Warning(s).
+Target not created
