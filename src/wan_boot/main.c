@@ -10,6 +10,8 @@
 #include "crc32.h"
 #include "flash_read.h"
 
+#include "irq.h"
+
 #define OS_STORED_ADDRESS 	0x08020000
 #define OS_INFO_ADDRESS 		0x08018000
 
@@ -21,12 +23,12 @@
 // extern INT32U TaskTickLeft; // Refer to the time ticks left for the current task
 // extern INT32U TimeMS;       // For system time record                             
 // extern INT32U TaskTimeSlice; // For system time record
-extern u8 SRAM_Kernel_Buffer[MAX_KERNEL_SIZE]; // For store the kernel
+// extern u8 SRAM_Kernel_Buffer[MAX_KERNEL_SIZE]; // For store the kernel
 
 // For usart1 receiving message
 extern unsigned char RecvBuffer[BUFSIZ];
 extern unsigned char SendBuffer[BUFSIZ];
-extern bool_t MsgGotten;
+// extern bool_t MsgGotten;
 
 uint8_t cmd_buf[64];
 // cmd.c
@@ -62,6 +64,8 @@ bool_t EndBurningFlag;
 uint8_t WaitBurning(uint32_t addr, uint32_t size, uint32_t crc)
 {
 	uint32_t count;
+	uint8_t *	kernel_buffer;
+	// uint32_t crc_tmp;
 	if(addr < 0x08000000 || addr > 0x08020000) {
 		printf("address is over crossed\r\n");
 		return 1; // over cross
@@ -71,18 +75,21 @@ uint8_t WaitBurning(uint32_t addr, uint32_t size, uint32_t crc)
 		return 2;
 	}
 	
-		USART_Cmd(USART1, DISABLE);
+	USART_Cmd(USART1, DISABLE);
     USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
     USART_DMACmd(USART1,USART_DMAReq_Rx,ENABLE); 
     DMA1_Channel5->CNDTR = size;//load
     DMA_Cmd(DMA1_Channel5, ENABLE);//open DMA
     USART_Cmd(USART1, ENABLE);
-	  EndBurningFlag = FALSE;
+	EndBurningFlag = FALSE;
     LEN_RED_TURN();
-		while(!EndBurningFlag)
-			;
+	while(!EndBurningFlag)
+		;
 
-		if(crc32_byte(SRAM_Kernel_Buffer, size) != crc) {
+	kernel_buffer = GetKernelBuffer();
+	// crc_tmp = crc32_byte(kernel_buffer, size);
+	// printf("crc_tmp = %x\r\n", crc_tmp);
+	if(crc32_byte(kernel_buffer, size) != crc) {
 			printf("Warning: CRC is not identical\r\n");
 		} 
 		OS_ENTER_CRITICAL();
@@ -93,7 +100,8 @@ uint8_t WaitBurning(uint32_t addr, uint32_t size, uint32_t crc)
 		printf("Start to burn flash\r\n"); //test
 		while(count < size / 2 + 1)
 		{
-			FLASH_ProgramHalfWord((addr +count*2),*((uint16_t *)(SRAM_Kernel_Buffer+count * 2)));  //flash  为一个字节存储，16位数据必须地址加2
+			// printf("%x ", *(uint16_t *)(kernel_buffer + count * 2));
+			FLASH_ProgramHalfWord((addr +count*2),*((uint16_t *)(kernel_buffer+count * 2)));  //flash  为一个字节存储，16位数据必须地址加2
 			count++;
 		}
 
@@ -153,7 +161,7 @@ void TaskBH(void *p_arg)
 	
 	KernelPmt KP;
 	
-	KP.MoveKernelTo = 0x20000000;
+
 	
 	#ifdef WANP
 
@@ -162,7 +170,7 @@ void TaskBH(void *p_arg)
 	#endif
 
 	while(1) {
-		if(!MsgGotten) {
+		if(!IsMsgGotten()) {
 			continue;
 		}
 		
@@ -192,20 +200,21 @@ void TaskBH(void *p_arg)
 						ret = DoBurn(RecvBuffer, kernel_name, addr, kernel_size, crc);
 						if(ret == 0) {
 							if('0' == addr[0] && ('x' == addr[1] || 'X' == addr[1])) {
-								KP.MoveKernelFrom = strtol((const char *)addr, &endptr, 16);
+								KP.MoveKernelFrom = strtoll((const char *)addr, &endptr, 16);
 							} else {			
 								KP.MoveKernelFrom = atoi((const char *)addr);
 							}
 							if('0' == kernel_size[0] && ('x' == kernel_size[1] || 'X' == kernel_size[1])) {
-								KP.KernelSize = strtol((const char *)kernel_size, &endptr, 16);
+								KP.KernelSize = strtoll((const char *)kernel_size, &endptr, 16);
 							} else {
 								KP.KernelSize = atoi((const char *)kernel_size);
 							}
 							if('0' == crc[0] && ('x' == crc[1] || 'X' == crc[1])) {
-								u_crc = strtol((const char *)crc, &endptr, 16);
+								u_crc = strtoll((const char *)crc, &endptr, 16);
 							} else {
 								u_crc = atoi((const char *)crc);
 							}
+
 							WaitBurning(KP.MoveKernelFrom, KP.KernelSize, u_crc);
 							printf("Addr:KernelSize:Crc=%08x:%08x:%08x\r\n", KP.MoveKernelFrom, KP.KernelSize, u_crc);
 							RespOK(SendBuffer, cmd_buf, NULL);
@@ -227,6 +236,7 @@ void TaskBH(void *p_arg)
 							// OS Info
 							flash_read_l(OS_INFO_ADDRESS, &(KP.MoveKernelFrom));
 							flash_read_l(OS_INFO_ADDRESS + 4, &(KP.KernelSize));
+							KP.MoveKernelTo = RAM_ADDR_FOR_KERNEL;
 							printf("Addr:KernelSize:RunAddr=%x:%d:%x\r\n", KP.MoveKernelFrom, KP.KernelSize, KP.MoveKernelTo);
 							RespOK(SendBuffer, cmd_buf, NULL);
 							
@@ -251,9 +261,7 @@ void TaskBH(void *p_arg)
 					}
 					printf("%s\r\n", SendBuffer);
 		
-		OS_ENTER_CRITICAL();
-		MsgGotten = FALSE;
-		OS_EXIT_CRITICAL();
+		ClrMsgGotten();
 	}
 }
 

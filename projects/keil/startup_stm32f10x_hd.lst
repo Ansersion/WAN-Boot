@@ -567,10 +567,10 @@ ARM Macro Assembler    Page 9
               00000200 
               00000000 
 Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\startu
-p_stm32f10x_hd.d -o.\startup_stm32f10x_hd.o -ID:\Installed\MDK5\ARM\RV31\INC -I
-D:\Installed\MDK5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include -ID:\Installed\MDK5\A
-RM\PACK\Keil\STM32F1xx_DFP\1.0.4\Device\Include --list=.\startup_stm32f10x_hd.l
-st ..\..\src\arch\startup_stm32f10x_hd.s
+p_stm32f10x_hd.d -o.\startup_stm32f10x_hd.o -IC:\Keil_v5\ARM\RV31\INC -IC:\Keil
+_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F1x
+x_DFP\1.0.4\Device\Include --list=.\startup_stm32f10x_hd.lst ..\..\src\arch\sta
+rtup_stm32f10x_hd.s
 
 
 

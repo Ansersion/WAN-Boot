@@ -57,9 +57,9 @@
 /*
 * RAM_ADDR_FOR_KERNEL:
 * Description: RAM start address for kernel to run.
-* Default: 0x20008000
+* Default: 0x20000000
 */
-#define RAM_ADDR_FOR_KERNEL 	0x20008000
+#define RAM_ADDR_FOR_KERNEL 	0x20000000
 
 
 /**********************************************************/
@@ -90,6 +90,7 @@
 /**********************************************************/
 /**********************************************************/
 
+uint8_t * GetKernelBuffer(void);
 volatile void InitClk(INT32U frequency);
 volatile void InitBuffers(void);
 volatile void SysTickInit(INT8U Nms); // (System Tick Initialization)

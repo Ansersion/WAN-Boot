@@ -9,7 +9,6 @@ INT32U TaskTimeSlice = TASK_TIME_SLICE;
 
 // uint32_t Index;
 // uint32_t MsgSize;
-extern u8 SRAM_Kernel_Buffer[MAX_KERNEL_SIZE];
 // extern bool_t StartOSFlag;
 extern bool_t EndBurningFlag;
 // extern uint32_t * kernel_start_address;
@@ -22,18 +21,8 @@ unsigned char SendBuffer[BUFSIZ];
 // bool_t MagicGotten;
 // bool_t SizeGotten;
 // bool_t ChecksumGotten;
-bool_t MsgGotten;
+static bool_t MsgGotten;
 
-/*
-__asm void ModifyPC(void) {
-	IMPORT SRAM_Kernel_Buffer
-	MRS R0, PSP
-	LDR R1, =SRAM_Kernel_Buffer
-	STR R1, [R0, #24] 
-	BX LR
-	align 4
-}
-*/
 #define HFSR 	((uint32_t *)0xE000ED2C)
 #define MFSR ((char *)0xE000ED28)
 #define BFSR ((char *)0xE000ED29)
@@ -78,7 +67,7 @@ void IRQInit(void)
 	// MagicGotten = FALSE;
 	// SizeGotten = FALSE;
 	// ChecksumGotten = FALSE;
-	MsgGotten = FALSE;
+	ClrMsgGotten();
 }
 
 volatile void IRQ_SysTick(void)
@@ -103,7 +92,7 @@ volatile void IRQ_Usart1(void)
 		return;
 	}
 	
-	if(!MsgGotten) {
+	if(!IsMsgGotten()) {
 		// RxData = USART_ReceiveData(USART1);
 		USART1_RECEIVE(RxData);
 		RecvBuffer[Index++] = (uint8_t)RxData;// serial_1();
@@ -120,11 +109,12 @@ volatile void IRQ_Usart1(void)
 		RecvBuffer[Index-2] == '\r' &&
 		RecvBuffer[Index-3] == '\n' &&
 		RecvBuffer[Index-4] == '\r') {
-			OS_ENTER_CRITICAL();
-			MsgGotten = TRUE;
+			// OS_ENTER_CRITICAL();
+			SetMsgGotten();
 			// MsgSize = Index;
+			// RecvBuffer[Index] = '\0';
+			// OS_EXIT_CRITICAL();
 			RecvBuffer[Index] = '\0';
-			OS_EXIT_CRITICAL();
 			Index = 0;
 	
 		}
@@ -132,21 +122,17 @@ volatile void IRQ_Usart1(void)
 
 		
 		if(Index >= BUFSIZ - 1 || RecvBuffer[Index-1] == '\r' || RecvBuffer[Index-1] == '\n') {
-			OS_ENTER_CRITICAL();
-			MsgGotten = TRUE;
+//			OS_ENTER_CRITICAL();
+// 			MsgGotten = TRUE;
 //			MsgSize = Index;
+//			RecvBuffer[Index] = '\0';
+//			OS_EXIT_CRITICAL();
+			SetMsgGotten();
 			RecvBuffer[Index] = '\0';
-			OS_EXIT_CRITICAL();
 			
 			Index = 0;
 		}
 		#endif
-}
-
-
-INT32U GetTime_API(void)
-{
-	return TimeMS;
 }
 
 void IRQ_DMA1_Channel5(void)
@@ -160,4 +146,28 @@ void IRQ_DMA1_Channel5(void)
 	 USART_Cmd(USART1, ENABLE);
 	 EndBurningFlag = TRUE;
 	 // LED1TURN(); // For indication
+}
+
+INT32U GetTime_API(void)
+{
+	return TimeMS;
+}
+
+bool_t IsMsgGotten(void)
+{
+	return MsgGotten;
+}
+
+void SetMsgGotten(void)
+{
+	OS_ENTER_CRITICAL();
+	MsgGotten = 1;
+	OS_EXIT_CRITICAL();
+}
+
+void ClrMsgGotten(void)
+{
+	OS_ENTER_CRITICAL();
+	MsgGotten = 0;
+	OS_EXIT_CRITICAL();
 }

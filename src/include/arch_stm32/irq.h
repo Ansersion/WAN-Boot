@@ -32,5 +32,8 @@ void IRQInit(void);
 // void PendSV_Handler_Asm(void);	
 
 INT32U GetTime_API(void);
+bool_t IsMsgGotten(void);
+void SetMsgGotten(void);
+void ClrMsgGotten(void);
 
 #endif

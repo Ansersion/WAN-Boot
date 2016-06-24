@@ -1,7 +1,13 @@
 #include "hardware.h"
 #include <absacc.h>
 
-u8  __attribute__((aligned(32)))SRAM_Kernel_Buffer[MAX_KERNEL_SIZE] __at(RAM_ADDR_FOR_KERNEL); // For loading the kernel
+// u8  __attribute__((aligned(32)))SRAM_Kernel_Buffer[MAX_KERNEL_SIZE]; // For loading the kernel
+uint8_t SRAM_Kernel_Buffer[MAX_KERNEL_SIZE]; // For loading the kernel
+
+uint8_t * GetKernelBuffer(void)
+{
+	return SRAM_Kernel_Buffer;
+}
 
 volatile void InitBuffers(void)
 {
