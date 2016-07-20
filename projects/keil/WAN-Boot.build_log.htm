@@ -4,69 +4,9 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 E:\WAN-Boot\WAN-Boot\projects\keil\WAN-Boot.uvproj
-Project File Date:  06/24/2016
+Project File Date:  07/03/2016
 
 <h2>Output:</h2>
-Build target 'Target 1'
-compiling main.c...
-..\..\src\wan_boot\main.c(187): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
-                                        if(strcmp(cmd_buf, Hello.Name) == 0) {
-..\..\src\wan_boot\main.c(195): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-                                                        RespOK(SendBuffer, cmd_buf, tmp_buf);
-..\..\src\wan_boot\main.c(199): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
-                                        } else if(strcmp(cmd_buf, Burn.Name) == 0) {
-..\..\src\wan_boot\main.c(229): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-                                                        RespOK(SendBuffer, cmd_buf, tmp_buf);
-..\..\src\wan_boot\main.c(233): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
-                                        } else if(strcmp(cmd_buf, Startos.Name) == 0) {
-..\..\src\wan_boot\main.c(251): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-                                                        RespOK(SendBuffer, cmd_buf, tmp_buf);
-..\..\src\wan_boot\main.c(258): warning:  #186-D: pointless comparison of unsigned integer with zero
-                                        if((msg_size = SealPacket(SendBuffer)) < 0) {
-..\..\src\wan_boot\main.c(160): warning:  #550-D: variable "msg_size" was set but never used
-        uint16_t msg_size;
-..\..\src\wan_boot\main.c: 8 warnings, 0 errors
-linking...
-Program Size: Code=12168 RO-data=820 RW-data=1080 ZI-data=22816  
-FromELF: creating hex file...
-".\WAN-Boot.axf" - 0 Error(s), 8 Warning(s).
-printf_to_serial.c(20): warning:  #940-D: missing return statement at end of non-void function "_sys_exit"
-  } 
-..\..\src\lib\printf_to_serial.c: 1 warning, 0 errors
-linking...
-Program Size: Code=11832 RO-data=820 RW-data=1080 ZI-data=22816  
-FromELF: creating hex file...
-".\WAN-Boot.axf" - 0 Error(s), 9 Warning(s).
-arameter of type "const char *"
-                                        } else if(strcmp(cmd_buf, Burn.Name) == 0) {
-..\..\src\wan_boot\main.c(220): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-                                                        RespOK(SendBuffer, cmd_buf, tmp_buf);
-..\..\src\wan_boot\main.c(224): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "const char *"
-                                        } else if(strcmp(cmd_buf, Startos.Name) == 0) {
-..\..\src\wan_boot\main.c(241): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
-                                                        RespOK(SendBuffer, cmd_buf, tmp_buf);
-..\..\src\wan_boot\main.c(248): warning:  #186-D: pointless comparison of unsigned integer with zero
-                                        if((msg_size = SealPacket(SendBuffer)) < 0) {
-..\..\src\wan_boot\main.c(152): warning:  #550-D: variable "msg_size" was set but never used
-        uint16_t msg_size;
-..\..\src\wan_boot\main.c: 8 warnings, 0 errors
-compiling sched.c...
-compiling time.c...
-compiling wanp.c...
-..\..\src\wan_boot\wanp.c(111): warning:  #1293-D: assignment in condition
-        while((*cmd = *req_msg)) {
-..\..\src\wan_boot\wanp.c: 1 warning, 0 errors
-compiling misc.c...
-compiling printf_to_serial.c...
-..\..\src\lib\printf_to_serial.c(20): warning:  #940-D: missing return statement at end of non-void function "_sys_exit"
-  } 
-..\..\src\lib\printf_to_serial.c: 1 warning, 0 errors
-compiling stm32f10x_dma.c...
-compiling stm32f10x_flash.c...
-compiling stm32f10x_gpio.c...
-compiling stm32f10x_rcc.c...
-compiling stm32f10x_usart.c...
-linking...
-Program Size: Code=11804 RO-data=820 RW-data=1080 ZI-data=48072  
-FromELF: creating hex file...
-".\WAN-Boot.axf" - 0 Error(s), 18 Warning(s).
+</pre>
+</body>
+</html>

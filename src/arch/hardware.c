@@ -45,7 +45,7 @@ volatile void SysTickInit(INT8U Nms)
 {
     OS_ENTER_CRITICAL();                          
 	
-	SysTick_Config(TICK_FREQUENCY / 1000);
+	SysTick_Config(Nms * TICK_FREQUENCY / 1000);
 	NVIC_SetPriority(SysTick_IRQn, 0x0); 
   OS_EXIT_CRITICAL();
 }

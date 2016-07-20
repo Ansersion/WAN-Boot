@@ -9,7 +9,7 @@ void OSInit(void)
 
 	OSTaskInit();
 	SysTickInit(SYS_TICK_UNIT);
-	SysTickInit(1);
+	// SysTickInit(1);
 	// SysTickInit(1);
 	RCC_EnablePhripheralInit();
 	InitBuffers();

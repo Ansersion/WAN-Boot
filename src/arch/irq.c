@@ -28,12 +28,15 @@ static bool_t MsgGotten;
 #define BFSR ((char *)0xE000ED29)
 #define UFSR ((char *)0xE000ED2A)
 	
+#define BFAR ((uint32_t *)0xE000ED38)
+	
 volatile void IRQ_HardFault(void)
 {
 
 	printf("HardFault:%x\r\n", *HFSR);
 	printf("MemManage:%x\r\n", *MFSR);
 	printf("BusFault:%x\r\n", *BFSR);
+	printf("BFAR:%x\r\n", *BFAR);
 	printf("UsageFault:%x\r\n", *UFSR);
 	for(;;);
 }
@@ -49,6 +52,7 @@ volatile void IRQ_BusFault(void)
 {
 
 	printf("BusFault:%x\r\n", *BFSR);
+	printf("BFAR:%x\r\n", *BFAR);
 	for(;;);
 }
 

@@ -65,7 +65,7 @@ uint8_t WaitBurning(uint32_t addr, uint32_t size, uint32_t crc)
 {
 	uint32_t count;
 	uint8_t *	kernel_buffer;
-	// uint32_t crc_tmp;
+	uint32_t crc_tmp;
 	if(addr < 0x08000000 || addr > 0x08020000) {
 		printf("address is over crossed\r\n");
 		return 1; // over cross
@@ -87,9 +87,9 @@ uint8_t WaitBurning(uint32_t addr, uint32_t size, uint32_t crc)
 		;
 
 	kernel_buffer = GetKernelBuffer();
-	// crc_tmp = crc32_byte(kernel_buffer, size);
-	// printf("crc_tmp = %x\r\n", crc_tmp);
-	if(crc32_byte(kernel_buffer, size) != crc) {
+	crc_tmp = crc32_byte(kernel_buffer, size);
+	printf("crc_tmp = %x\r\n", crc_tmp);
+	if(crc_tmp != crc) {
 			printf("Warning: CRC is not identical\r\n");
 		} 
 		OS_ENTER_CRITICAL();

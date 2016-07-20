@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\WAN-Boot.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\WAN-Boot.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5040049: Last Updated: Fri Jun 24 23:03:32 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5040049: Last Updated: Sat Jul 16 03:20:15 2016
 <BR><P>
-<H3>Maximum Stack Usage =        376 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        384 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 TaskBH &rArr; WaitBurning &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 <P>
@@ -313,7 +313,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSInit
 </UL>
 
-<P><STRONG><a name="[76]"></a>SysTickInit</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, hardware.o(.text))
+<P><STRONG><a name="[76]"></a>SysTickInit</STRONG> (Thumb, 76 bytes, Stack size 16 bytes, hardware.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24 + Unknown Stack Size
 <LI>Call Chain = SysTickInit &rArr; NVIC_SetPriority
 </UL>
@@ -369,7 +369,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OSInit
 </UL>
 
-<P><STRONG><a name="[8a]"></a>OSInit</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, init.o(.text))
+<P><STRONG><a name="[8a]"></a>OSInit</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, init.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 108 + Unknown Stack Size
 <LI>Call Chain = OSInit &rArr; USART1_Configuration &rArr; USART_Init &rArr; RCC_GetClocksFreq
 </UL>
@@ -388,7 +388,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5]"></a>HardFault_Handler</STRONG> (Thumb, 50 bytes, Stack size 0 bytes, irq.o(.text))
+<P><STRONG><a name="[5]"></a>HardFault_Handler</STRONG> (Thumb, 62 bytes, Stack size 0 bytes, irq.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144 + Unknown Stack Size
 <LI>Call Chain = HardFault_Handler &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -404,7 +404,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[7]"></a>BusFault_Handler</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, irq.o(.text))
+<P><STRONG><a name="[7]"></a>BusFault_Handler</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, irq.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144 + Unknown Stack Size
 <LI>Call Chain = BusFault_Handler &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -804,8 +804,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WaitBurning
 </UL>
 
-<P><STRONG><a name="[a2]"></a>WaitBurning</STRONG> (Thumb, 282 bytes, Stack size 24 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
+<P><STRONG><a name="[a2]"></a>WaitBurning</STRONG> (Thumb, 292 bytes, Stack size 32 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 176 + Unknown Stack Size
 <LI>Call Chain = WaitBurning &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
@@ -828,7 +828,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[ab]"></a>TaskBH</STRONG> (Thumb, 598 bytes, Stack size 208 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 376 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 384 + Unknown Stack Size
 <LI>Call Chain = TaskBH &rArr; WaitBurning &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
