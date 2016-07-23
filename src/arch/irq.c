@@ -7,8 +7,12 @@
 INT32U TimeMS = 0;
 INT32U TaskTimeSlice = TASK_TIME_SLICE;
 
+extern OS_TCB *OSTCBCur; // Pointer to the current running task(OS Task Control Block Current)
+extern OS_TCB *OSTCBNext; // Pointer to the next running task(OS Task Control Block Next)
+
 // uint32_t Index;
 // uint32_t MsgSize;
+// extern u8 SRAM_Kernel_Buffer[MAX_KERNEL_SIZE];
 // extern bool_t StartOSFlag;
 extern bool_t EndBurningFlag;
 // extern uint32_t * kernel_start_address;
@@ -23,11 +27,20 @@ unsigned char SendBuffer[BUFSIZ];
 // bool_t ChecksumGotten;
 static bool_t MsgGotten;
 
+/*
+__asm void ModifyPC(void) {
+	IMPORT SRAM_Kernel_Buffer
+	MRS R0, PSP
+	LDR R1, =SRAM_Kernel_Buffer
+	STR R1, [R0, #24] 
+	BX LR
+	align 4
+}
+*/
 #define HFSR 	((uint32_t *)0xE000ED2C)
 #define MFSR ((char *)0xE000ED28)
 #define BFSR ((char *)0xE000ED29)
 #define UFSR ((char *)0xE000ED2A)
-	
 #define BFAR ((uint32_t *)0xE000ED38)
 	
 volatile void IRQ_HardFault(void)
@@ -116,8 +129,6 @@ volatile void IRQ_Usart1(void)
 			// OS_ENTER_CRITICAL();
 			SetMsgGotten();
 			// MsgSize = Index;
-			// RecvBuffer[Index] = '\0';
-			// OS_EXIT_CRITICAL();
 			RecvBuffer[Index] = '\0';
 			Index = 0;
 	
@@ -139,6 +150,12 @@ volatile void IRQ_Usart1(void)
 		#endif
 }
 
+
+INT32U GetTime_API(void)
+{
+	return TimeMS;
+}
+
 void IRQ_DMA1_Channel5(void)
 {
 	 DMA_ClearITPendingBit(DMA1_IT_TC5);
@@ -152,9 +169,14 @@ void IRQ_DMA1_Channel5(void)
 	 // LED1TURN(); // For indication
 }
 
-INT32U GetTime_API(void)
+void IRQ_PendSV_C(void)
 {
-	return TimeMS;
+	uint32_t psp;
+	psp = __get_PSP();
+	// if(psp != 0)
+		OSTCBCur->OSTCBStkPtr = (OS_STK *)__get_PSP();
+	OSTCBCur = OSTCBNext;
+	__set_PSP((uint32_t)(OSTCBCur->OSTCBStkPtr));
 }
 
 bool_t IsMsgGotten(void)

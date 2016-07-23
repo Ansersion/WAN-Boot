@@ -28,6 +28,8 @@ volatile void IRQ_Usart1(void);
 void IRQ_DMA1_Channel5(void);
 void IRQInit(void);
 
+void IRQ_PendSV_C(void);
+
 // PendSV interruption--asm
 // void PendSV_Handler_Asm(void);	
 

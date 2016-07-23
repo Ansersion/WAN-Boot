@@ -1,4 +1,5 @@
 #include "sched.h"
+#include "stm32f10x.h"
 
 
 OS_TCB *OSTCBCur; // Pointer to the current running task(OS Task Control Block Current)
@@ -174,5 +175,12 @@ uint8_t TaskSetState(OS_TCB * tcb, uint8_t TaskState)
 {
 	tcb->TaskState = TaskState;
 	return tcb->TaskState;
+}
+
+void OSCtxSw(void)
+{
+	OS_ENTER_CRITICAL();
+	SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
+	OS_EXIT_CRITICAL();
 }
 

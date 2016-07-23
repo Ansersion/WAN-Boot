@@ -1,11 +1,12 @@
 	IMPORT 	OSTCBCur
 	IMPORT	OSTCBNext
+	IMPORT  IRQ_PendSV_C
 	
 	EXPORT	OS_ENTER_CRITICAL
 	EXPORT 	OS_EXIT_CRITICAL
 	EXPORT	BootStart
 	EXPORT	PendSV_Handler
-	EXPORT 	OSCtxSw
+;	EXPORT 	OSCtxSw
 	EXPORT 	MoveAndStartKernel_Asm
 		
 	; EXPORT StartKernel_2
@@ -42,8 +43,15 @@ BootStart
 	
 	; initialize PSP as 0
 	; MOV	R4, #0
-	LDR R4,  =0x0						; R4 = 0;
-	MSR	PSP, R4							; PSP = R4;
+	
+	LDR 	R4, =OSTCBCur
+	LDR 	R4, [R4]
+	LDR 	R4, [R4]
+	ADD 	R4, R4, #0x20
+	MSR 	PSP, R4
+	
+	; LDR R4,  =0x0						; R4 = 0;
+	; MSR	PSP, R4							; PSP = R4;
 	
 	; trigger PendSV
 	LDR	R4, =NVIC_INT_CTRL				; R4 = NVIC_INT_CTRL;
@@ -59,43 +67,67 @@ BootStartHang
 	B	BootStartHang
 
 ;/******************PendSV_Handler************/
+; PendSV_Handler
+; 	CPSID	I							; OS_ENTER_CRITICAL();
+; 	; judge if PSP is 0 which means the task is first invoked
+; 	MRS 	R0, PSP						; R0 = PSP;
+; 	CBZ 	R0, PendSV_Handler_NoSave	; if(R0 == 0) goto PendSV_Handler_NoSave;
+; 	
+; 	; store R4-R11 to *R0
+; 	SUB 	R0, R0, #0x20
+; 	STM 	R0, {R4-R11}
+; 	
+; 	LDR 	R1, =OSTCBCur			; R1 = OSTCBCur;
+; 	LDR 	R1, [R1] 				; R1 = *R1;(R1 = OSTCBCur->OSTCBStkPtr)
+; 	STR 	R0, [R1] 				; *R1 = R0;(*(OSTCBCur->OSTCBStkPrt) = R0)
+; 
+; PendSV_Handler_NoSave
+; 	LDR 	R0, =OSTCBCur 			; R0 = OSTCBCur;
+; 	LDR 	R1, =OSTCBNext			; R1 = OSTCBNext;
+; 	LDR 	R2, [R1] 				; R2 = OSTCBNext->OSTCBStkPtr;
+; 	STR 	R2, [R0]				; *R0 = R2;(OSTCBCur->OSTCBStkPtr = OSTCBNext->OSTCBStkPtr)
+; 	
+; 	LDR 	R0, [R2] 				; R0 = *R2;(R0 = OSTCBNext->OSTCBStkPtr)
+; 
+; 	; restore *R0 to R4-R11 
+; 	LDM 	R0!, {R4-R11}
+; 	
+; 	MSR 	PSP, R0 				; PSP = R0;(PSP = OSTCBNext->OSTCBStkPtr)
+; 	ORR 	LR, LR, #0x04 		; LR = LR | 0x04; use PSP
+; 	CPSIE 	I 					; OS_EXIT_CRITICAL();
+; 	BX	LR 						; return;
+
 PendSV_Handler
-	CPSID	I							; OS_ENTER_CRITICAL();
-	; judge if PSP is 0 which means the task is first invoked
-	MRS 	R0, PSP						; R0 = PSP;
-	CBZ 	R0, PendSV_Handler_NoSave	; if(R0 == 0) goto PendSV_Handler_NoSave;
-	
-	; store R4-R11 to *R0
-	SUB 	R0, R0, #0x20
-	STM 	R0, {R4-R11}
-	
-	LDR 	R1, =OSTCBCur			; R1 = OSTCBCur;
-	LDR 	R1, [R1] 				; R1 = *R1;(R1 = OSTCBCur->OSTCBStkPtr)
-	STR 	R0, [R1] 				; *R1 = R0;(*(OSTCBCur->OSTCBStkPrt) = R0)
+	cpsid 	I
+	mrs 	r0, psp
 
-PendSV_Handler_NoSave
-	LDR 	R0, =OSTCBCur 			; R0 = OSTCBCur;
-	LDR 	R1, =OSTCBNext			; R1 = OSTCBNext;
-	LDR 	R2, [R1] 				; R2 = OSTCBNext->OSTCBStkPtr;
-	STR 	R2, [R0]				; *R0 = R2;(OSTCBCur->OSTCBStkPtr = OSTCBNext->OSTCBStkPtr)
-	
-	LDR 	R0, [R2] 				; R0 = *R2;(R0 = OSTCBNext->OSTCBStkPtr)
+;	CBZ 	r0, PendSV_Handler_NoSave
 
-	; restore *R0 to R4-R11 
-	LDM 	R0!, {R4-R11}
-	
-	MSR 	PSP, R0 				; PSP = R0;(PSP = OSTCBNext->OSTCBStkPtr)
-	ORR 	LR, LR, #0x04 		; LR = LR | 0x04; use PSP
-	CPSIE 	I 					; OS_EXIT_CRITICAL();
-	BX	LR 						; return;
+	sub 	r0, r0, #0x20
+	msr 	psp, r0
+	stm 	r0, {r4-r11}
 
-OSCtxSw ;OS context switch
-	PUSH	{R4, R5}				
-	LDR 	R4, =NVIC_INT_CTRL 			; R4 = NVIC_INT_CTRL
-	LDR 	R5, =NVIC_PENDSVSET			; R5 = NVIC_PENDSVSET
-	STR 	R5, [R4] 					; *R4 = R5
-	POP 	{R4, R5}
-	BX 	LR 								; return;
+;PendSV_Handler_NoSave	
+	push 	{lr}
+	bl 		IRQ_PendSV_C
+	pop 	{lr}
+
+	mrs 	r0, psp
+
+	ldm 	r0!, {r4-r11}
+	msr 	psp, r0
+	orr 	lr, lr, #0x04
+	cpsie 	I
+	bx 		lr
+
+
+;OSCtxSw ;OS context switch
+;	PUSH	{R4, R5}				
+;	LDR 	R4, =NVIC_INT_CTRL 			; R4 = NVIC_INT_CTRL
+;	LDR 	R5, =NVIC_PENDSVSET			; R5 = NVIC_PENDSVSET
+;	STR 	R5, [R4] 					; *R4 = R5
+;	POP 	{R4, R5}
+;	BX 	LR 								; return;
 	
 	align 4
 ;void MoveAndStartKernel_Asm(KernelPmt * KP)

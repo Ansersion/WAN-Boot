@@ -7,6 +7,49 @@ E:\WAN-Boot\WAN-Boot\projects\keil\WAN-Boot.uvproj
 Project File Date:  07/03/2016
 
 <h2>Output:</h2>
+Build target 'Target 1'
+linking...
+Program Size: Code=12292 RO-data=820 RW-data=1080 ZI-data=22816  
+FromELF: creating hex file...
+".\WAN-Boot.axf" - 0 Error(s), 0 Warning(s).
 </pre>
 </body>
 </html>
+RM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1323): error:  #20: identifier "IRQn_Type" is undefined
+  __STATIC_INLINE void NVIC_EnableIRQ(IRQn_Type IRQn)
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1335): error:  #20: identifier "IRQn_Type" is undefined
+  __STATIC_INLINE void NVIC_DisableIRQ(IRQn_Type IRQn)
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1351): error:  #20: identifier "IRQn_Type" is undefined
+  __STATIC_INLINE uint32_t NVIC_GetPendingIRQ(IRQn_Type IRQn)
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1363): error:  #20: identifier "IRQn_Type" is undefined
+  __STATIC_INLINE void NVIC_SetPendingIRQ(IRQn_Type IRQn)
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1375): error:  #20: identifier "IRQn_Type" is undefined
+  __STATIC_INLINE void NVIC_ClearPendingIRQ(IRQn_Type IRQn)
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1390): error:  #20: identifier "IRQn_Type" is undefined
+  __STATIC_INLINE uint32_t NVIC_GetActive(IRQn_Type IRQn)
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1405): error:  #20: identifier "IRQn_Type" is undefined
+  __STATIC_INLINE void NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1408): error:  #20: identifier "__NVIC_PRIO_BITS" is undefined
+      SCB->SHP[((uint32_t)(IRQn) & 0xF)-4] = ((priority << (8 - __NVIC_PRIO_BITS)) & 0xff); } /* set Priority for Cortex-M  System Interrupts */
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1410): error:  #20: identifier "__NVIC_PRIO_BITS" is undefined
+      NVIC->IP[(uint32_t)(IRQn)] = ((priority << (8 - __NVIC_PRIO_BITS)) & 0xff);    }        /* set Priority for device specific Interrupts  */
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1425): error:  #20: identifier "IRQn_Type" is undefined
+  __STATIC_INLINE uint32_t NVIC_GetPriority(IRQn_Type IRQn)
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1429): error:  #20: identifier "__NVIC_PRIO_BITS" is undefined
+      return((uint32_t)(SCB->SHP[((uint32_t)(IRQn) & 0xF)-4] >> (8 - __NVIC_PRIO_BITS)));  } /* get priority for Cortex-M  system interrupts */
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1431): error:  #20: identifier "__NVIC_PRIO_BITS" is undefined
+      return((uint32_t)(NVIC->IP[(uint32_t)(IRQn)]           >> (8 - __NVIC_PRIO_BITS)));  } /* get priority for device specific interrupts  */
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1453): error:  #20: identifier "__NVIC_PRIO_BITS" is undefined
+    PreemptPriorityBits = ((7 - PriorityGroupTmp) > __NVIC_PRIO_BITS) ? __NVIC_PRIO_BITS : 7 - PriorityGroupTmp;
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1481): error:  #20: identifier "__NVIC_PRIO_BITS" is undefined
+    PreemptPriorityBits = ((7 - PriorityGroupTmp) > __NVIC_PRIO_BITS) ? __NVIC_PRIO_BITS : 7 - PriorityGroupTmp;
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1537): error:  #20: identifier "SysTick_IRQn" is undefined
+    NVIC_SetPriority (SysTick_IRQn, (1<<__NVIC_PRIO_BITS) - 1);  /* set Priority for Systick Interrupt */
+C:\Keil_v5\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include\core_cm3.h(1537): error:  #20: identifier "__NVIC_PRIO_BITS" is undefined
+    NVIC_SetPriority (SysTick_IRQn, (1<<__NVIC_PRIO_BITS) - 1);  /* set Priority for Systick Interrupt */
+..\..\src\wan_boot\sched.c: 0 warnings, 16 errors
+".\WAN-Boot.axf" - 16 Error(s), 1 Warning(s).
+Target not created
+rnings, 16 errors
+".\WAN-Boot.axf" - 17 Error(s), 1 Warning(s).
+Target not created
